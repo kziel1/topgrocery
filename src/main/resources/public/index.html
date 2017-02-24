@@ -2,9 +2,43 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>asd</title>
+	<title>TOPgrocery</title>
+	<link rel="stylesheet" href="index.css">
+	<script src="index.js"></script>
 </head>
 <body>
-<p>Get your greeting <a href="/greeting">here</a></p>
+<table id="inventory">
+	<caption>Inventory</caption>
+	<thead>
+
+	<tr>
+		<th>Article</th>
+		<th>Amount</th>
+		<th>Use by</th>
+	</tr>
+	</thead>
+	<tbody>
+
+	</tbody>
+</table>
+<table id="articles">
+	<caption>Articles</caption>
+	<thead>
+	<tr>
+		<th>Id</th>
+		<th>Name</th>
+	</tr>
+	</thead>
+	<tbody>
+
+	</tbody>
+</table>
+<form action="/articles" method="post">
+	<label for="article">
+		Add article to database
+	</label>
+	<input type="text" name="name" id="article" placeholder="zB. Kartoffelsalat">
+	<button>add</button>
+</form>
 </body>
 </html>
