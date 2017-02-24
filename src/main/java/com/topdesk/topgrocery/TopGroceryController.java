@@ -2,12 +2,12 @@ package com.topdesk.topgrocery;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,16 +35,26 @@ public class TopGroceryController {
 	@RequestMapping(value = "/articles", method = RequestMethod.POST)
 	HttpStatus addArticle(Article article) {
 		articleRepository.save(article);
-		ShoppingListArticle shoppingListArticle = new ShoppingListArticle();
-		shoppingListArticle.setArticle(article);
-		shoppingListArticle.setAmount(3);
+		addToInventory(article);
+		addToShoppingList(article);
+		return HttpStatus.OK;
+	}
+	
+	//temporarily, only for presentation
+	private void addToInventory(Article article) {
 		InventoryArticle inventoryArticle = new InventoryArticle();
 		inventoryArticle.setArticle(article);
-		inventoryArticle.setAmount(3);
+		inventoryArticle.setAmount(new Random().nextInt(10)+1);
 		inventoryArticle.setUseBy(new Date());
-		shoppingListArticleRepository.save(shoppingListArticle);
 		inventoryArticleRepository.save(inventoryArticle);
-		return HttpStatus.OK;
+	}
+	
+	//temporarily, only for presentation
+	private void addToShoppingList(Article article) {
+		ShoppingListArticle shoppingListArticle = new ShoppingListArticle();
+		shoppingListArticle.setArticle(article);
+		shoppingListArticle.setAmount(new Random().nextInt(10)+1);
+		shoppingListArticleRepository.save(shoppingListArticle);
 	}
 	
 	//list instead of collection?
@@ -53,12 +63,12 @@ public class TopGroceryController {
 		Collection<InventoryArticle> response = inventoryArticleRepository.findAll();
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value = "/inventory-articles", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-	HttpStatus addInventoryArticle(@RequestBody InventoryArticle inventoryArticle) {
-		inventoryArticleRepository.save(inventoryArticle);
-		return HttpStatus.OK;
-	}
+	//TODO
+//	@RequestMapping(value = "/inventory-articles", method = RequestMethod.POST)
+//	HttpStatus addInventoryArticle(@RequestBody InventoryArticle inventoryArticle) {
+//		inventoryArticleRepository.save(inventoryArticle);
+//		return HttpStatus.OK;
+//	}
 	
 	//list instead of collection?
 	@RequestMapping(value = "/shopping-list-articles", method = RequestMethod.GET)
@@ -66,11 +76,11 @@ public class TopGroceryController {
 		Collection<ShoppingListArticle> response = shoppingListArticleRepository.findAll();
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value = "/shopping-list-articles", method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
-	HttpStatus addShoppingListArticle(@RequestBody ShoppingListArticle shoppingListArticle) {
+	//TODO
+//	@RequestMapping(value = "/shopping-list-articles", method = RequestMethod.POST)
+//	HttpStatus addShoppingListArticle(@RequestBody ShoppingListArticle shoppingListArticle) {
 //		Article article = articleRepository.findOne(shoppingListArticle.getArticle());
-		shoppingListArticleRepository.save(shoppingListArticle);
-		return HttpStatus.OK;
-	}
+//		shoppingListArticleRepository.save(shoppingListArticle);
+//		return HttpStatus.OK;
+//	}
 }
