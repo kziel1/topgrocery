@@ -1,15 +1,39 @@
-function doRequest(url, callback) {
-	var xhttp = new XMLHttpRequest();
-	xhttp.onreadystatechange = function () {
-		if (xhttp.readyState === 4 && xhttp.status === 200) {
-			var articles = JSON.parse(xhttp.responseText);
+"use strict";
+function doGetRequest(method, url, callback) {
+	var request = new XMLHttpRequest();
+	request.open(method, "http://localhost:8080/" + url, true);
+	request.onreadystatechange = function () {
+		if (request.readyState === 4 && request.status === 200) {
+			var articles = JSON.parse(request.responseText);
 			callback(articles);
-		} else if (xhttp.readyState == 4 && xhttp.status !== 200) {
-			console.log(xhttp.status);
+		} else if (request.readyState == 4 && request.status !== 200) {
+			console.log(request.status);
 		}
 	};
-	xhttp.open("GET", "http://localhost:8080/" + url, true);
-	xhttp.send();
+	request.send();
+}
+function doPostRequest(method, url, data) {
+	var request = new XMLHttpRequest();
+	request.open(method, "http://localhost:8080/" + url, true);
+	request.setRequestHeader("Content-type", "application/json");
+	request.send(JSON.stringify(data));
+}
+function addArticle() {
+	var article = {};
+	article.name = document.getElementById("article-name").value;
+	doPostRequest("POST", "articles", article);
+}
+function editArticle() {
+	var article = {};
+	article.id = document.getElementById("article-id").value;
+	article.name = document.getElementById("article-name").value;
+	doPostRequest("PUT", "articles", article);
+}
+function deleteArticle() {
+	var article = {};
+	article.id = document.getElementById("article-id").value;
+	article.name = document.getElementById("article-name").value;
+	doPostRequest("DELETE", "articles", article);
 }
 function populateArticlesTable(articles) {
 	var i, row, cell;
@@ -51,7 +75,7 @@ function populateShoppingListArticlesTable(shoppingArticles) {
 	}
 }
 window.onload = function () {
-	doRequest("articles", populateArticlesTable);
-	doRequest("inventory-articles", populateInventoryArticlesTable);
-	doRequest("shopping-list-articles", populateShoppingListArticlesTable);
+	doGetRequest("GET", "articles", populateArticlesTable);
+	doGetRequest("GET", "inventory-articles", populateInventoryArticlesTable);
+	doGetRequest("GET", "shopping-list-articles", populateShoppingListArticlesTable);
 };

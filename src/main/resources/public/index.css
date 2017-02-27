@@ -1,3 +1,7 @@
+div {
+	border: 1px solid blue;
+	margin: 1em;
+}
 table {
 	border: solid;
 }

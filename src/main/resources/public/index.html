@@ -7,46 +7,58 @@
 	<script src="index.js"></script>
 </head>
 <body>
-<table id="inventory">
-	<caption>Inventory</caption>
-	<thead>
-	<tr>
-		<th>Id</th>
-		<th>Article</th>
-		<th>Amount</th>
-		<th>Use by</th>
-	</tr>
-	</thead>
-	<tbody></tbody>
-</table>
-<table id="shopping-list">
-	<caption>Shopping list</caption>
-	<thead>
-	<tr>
-		<th>Id</th>
-		<th>Article</th>
-		<th>Amount</th>
-	</tr>
-	</thead>
-	<tbody></tbody>
-</table>
-<table id="articles">
-	<caption>Articles</caption>
-	<thead>
-	<tr>
-		<th>Id</th>
-		<th>Name</th>
-	</tr>
-	</thead>
-	<tbody></tbody>
-</table>
-<form action="/articles" method="post">
-	<!--todo action-->
-	<label for="article">
-		Add article to database
+<div>
+	<table id="articles">
+		<caption>Articles</caption>
+		<thead>
+		<tr>
+			<th>Id</th>
+			<th>Name</th>
+		</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+	<!--needed form tag?-->
+	<!--<form>-->
+	<label for="article-id">
+		Article id
 	</label>
-	<input type="text" name="name" id="article" placeholder="zB. Kartoffelsalat">
-	<button>add</button>
-</form>
+	<input type="text" name="name" id="article-id">
+	<label for="article-name">
+		Article name
+	</label>
+	<input type="text" name="name" id="article-name" placeholder="zB. Kartoffelsalat">
+	<button onclick="addArticle()">add</button>
+	<button onclick="editArticle()">edit</button>
+	<button onclick="deleteArticle()">delete</button>
+	<!--</form>-->
+</div>
+<div>
+	<table id="inventory">
+		<caption>Inventory</caption>
+		<thead>
+		<tr>
+			<th>Id</th>
+			<th>Article</th>
+			<th>Amount</th>
+			<th>Use by</th>
+		</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+</div>
+<div>
+	<table id="shopping-list">
+		<caption>Shopping list</caption>
+		<thead>
+		<tr>
+			<th>Id</th>
+			<th>Article</th>
+			<th>Amount</th>
+		</tr>
+		</thead>
+		<tbody></tbody>
+	</table>
+</div>
 </body>
 </html>

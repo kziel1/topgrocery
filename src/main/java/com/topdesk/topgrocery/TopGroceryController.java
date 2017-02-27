@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,10 +34,22 @@ public class TopGroceryController {
 	}
 	
 	@RequestMapping(value = "/articles", method = RequestMethod.POST)
-	HttpStatus addArticle(Article article) {
+	HttpStatus addArticle(@RequestBody Article article) {
 		articleRepository.save(article);
 		addToInventory(article);
 		addToShoppingList(article);
+		return HttpStatus.OK;
+	}
+	
+	@RequestMapping(value = "/articles", method = RequestMethod.PUT)
+	HttpStatus editArticle(@RequestBody Article article) {
+		articleRepository.save(article);
+		return HttpStatus.OK;
+	}
+	
+	@RequestMapping(value = "/articles", method = RequestMethod.DELETE)
+	HttpStatus deleteArticle(@RequestBody Article article) {
+		articleRepository.delete(article.getId());
 		return HttpStatus.OK;
 	}
 	
@@ -44,7 +57,7 @@ public class TopGroceryController {
 	private void addToInventory(Article article) {
 		InventoryArticle inventoryArticle = new InventoryArticle();
 		inventoryArticle.setArticle(article);
-		inventoryArticle.setAmount(new Random().nextInt(10)+1);
+		inventoryArticle.setAmount(new Random().nextInt(10) + 1);
 		inventoryArticle.setUseBy(new Date());
 		inventoryArticleRepository.save(inventoryArticle);
 	}
@@ -53,7 +66,7 @@ public class TopGroceryController {
 	private void addToShoppingList(Article article) {
 		ShoppingListArticle shoppingListArticle = new ShoppingListArticle();
 		shoppingListArticle.setArticle(article);
-		shoppingListArticle.setAmount(new Random().nextInt(10)+1);
+		shoppingListArticle.setAmount(new Random().nextInt(10) + 1);
 		shoppingListArticleRepository.save(shoppingListArticle);
 	}
 	
