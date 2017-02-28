@@ -26,9 +26,8 @@ public class TopGroceryController {
 	@Autowired
 	private JpaRepository<InventoryArticle, Long> inventoryArticleRepository;
 	
-	//list instead of collection?
 	@RequestMapping(value = "/articles", method = RequestMethod.GET)
-	ResponseEntity<Collection<Article>> articles() {
+	ResponseEntity<Collection<Article>> getArticles() {
 		Collection<Article> response = articleRepository.findAll();
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
@@ -53,6 +52,31 @@ public class TopGroceryController {
 		return HttpStatus.OK;
 	}
 	
+	@RequestMapping(value = "/inventory-articles", method = RequestMethod.GET)
+	ResponseEntity<Collection<InventoryArticle>> getInventoryArticles() {
+		Collection<InventoryArticle> response = inventoryArticleRepository.findAll();
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	//TODO
+	@RequestMapping(value = "/inventory-articles", method = RequestMethod.POST)
+	HttpStatus addInventoryArticle(@RequestBody InventoryArticle inventoryArticle) {
+		inventoryArticleRepository.save(inventoryArticle);
+		return HttpStatus.OK;
+	}
+	
+	@RequestMapping(value = "/shopping-list-articles", method = RequestMethod.GET)
+	ResponseEntity<Collection<ShoppingListArticle>> getShoppingListArticles() {
+		Collection<ShoppingListArticle> response = shoppingListArticleRepository.findAll();
+		return new ResponseEntity<>(response, HttpStatus.OK);
+	}
+	//TODO
+//	@RequestMapping(value = "/shopping-list-articles", method = RequestMethod.POST)
+//	HttpStatus addShoppingListArticle(@RequestBody ShoppingListArticle shoppingListArticle) {
+//		Article article = articleRepository.findOne(shoppingListArticle.getArticle());
+//		shoppingListArticleRepository.save(shoppingListArticle);
+//		return HttpStatus.OK;
+//	}
+	
 	//temporarily, only for presentation
 	private void addToInventory(Article article) {
 		InventoryArticle inventoryArticle = new InventoryArticle();
@@ -69,31 +93,4 @@ public class TopGroceryController {
 		shoppingListArticle.setAmount(new Random().nextInt(10) + 1);
 		shoppingListArticleRepository.save(shoppingListArticle);
 	}
-	
-	//list instead of collection?
-	@RequestMapping(value = "/inventory-articles", method = RequestMethod.GET)
-	ResponseEntity<Collection<InventoryArticle>> inventoryArticles() {
-		Collection<InventoryArticle> response = inventoryArticleRepository.findAll();
-		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
-	//TODO
-//	@RequestMapping(value = "/inventory-articles", method = RequestMethod.POST)
-//	HttpStatus addInventoryArticle(@RequestBody InventoryArticle inventoryArticle) {
-//		inventoryArticleRepository.save(inventoryArticle);
-//		return HttpStatus.OK;
-//	}
-	
-	//list instead of collection?
-	@RequestMapping(value = "/shopping-list-articles", method = RequestMethod.GET)
-	ResponseEntity<Collection<ShoppingListArticle>> ShoppingListArticles() {
-		Collection<ShoppingListArticle> response = shoppingListArticleRepository.findAll();
-		return new ResponseEntity<>(response, HttpStatus.OK);
-	}
-	//TODO
-//	@RequestMapping(value = "/shopping-list-articles", method = RequestMethod.POST)
-//	HttpStatus addShoppingListArticle(@RequestBody ShoppingListArticle shoppingListArticle) {
-//		Article article = articleRepository.findOne(shoppingListArticle.getArticle());
-//		shoppingListArticleRepository.save(shoppingListArticle);
-//		return HttpStatus.OK;
-//	}
 }
