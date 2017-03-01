@@ -19,14 +19,11 @@
 		</thead>
 		<tbody></tbody>
 	</table>
-	<!--needed form tag?-->
-	<!--<form>-->
 	<label for="article-name">
 		Article name
 	</label>
 	<input type="text" name="name" id="article-name" placeholder="zB. Kartoffelsalat">
 	<button onclick="addArticle()">add</button>
-	<!--</form>-->
 </div>
 <div>
 	<table id="inventory">
@@ -55,5 +52,24 @@
 		<tbody></tbody>
 	</table>
 </div>
+<form>
+	<label for="zusatz">Zusatzschleim</label>
+	<!--Das Attribut size sorgt dafür, dass mehrere Einträge sichtbar sind, ohne die Auswahlbox aufklappen zu müssen.
+	Aber erst durch multiple können auch mehrere ausgewählt werden. -->
+	<select name="zusatz[]" multiple size="5" id="zusatz">
+		<optgroup label="The Good">
+			<option value="intelligent">intelligent</option>
+			<option value="gutaussehend">gutaussehend</option>
+		</optgroup>
+		<optgroup label="The Bad">
+			<option value="nach Käse riechend">nach Käse riechend</option>
+			<option value="langweilig">langweilig</option>
+		</optgroup>
+		<optgroup label="And The Creepy">
+			<option value="wohlgeformt">wohlgeformt</option>
+			<option value="schmackhaft">schmackhaft</option>
+		</optgroup>
+	</select>
+</form>
 </body>
 </html>

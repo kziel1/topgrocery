@@ -1,8 +1,8 @@
-package com.topdesk.topgrocery.model;
+package com.topdesk.topgrocery.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.topdesk.topgrocery.model.InventoryArticle;
+import com.topdesk.topgrocery.entity.InventoryArticle;
 
 public interface InventoryArticleRepository extends JpaRepository<InventoryArticle, Long> {
 }

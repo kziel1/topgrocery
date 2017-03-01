@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.topdesk.topgrocery.model.Article;
-import com.topdesk.topgrocery.model.InventoryArticle;
-import com.topdesk.topgrocery.model.ShoppingListArticle;
+import com.topdesk.topgrocery.entity.Article;
+import com.topdesk.topgrocery.entity.InventoryArticle;
+import com.topdesk.topgrocery.entity.ShoppingListArticle;
 
 @RestController
 public class TopGroceryController {
@@ -32,17 +32,11 @@ public class TopGroceryController {
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/articles", method = RequestMethod.POST)
+	@RequestMapping(value = "/articles", method = {RequestMethod.POST, RequestMethod.PUT})
 	HttpStatus addArticle(@RequestBody Article article) {
 		articleRepository.save(article);
 		addToInventory(article);
 		addToShoppingList(article);
-		return HttpStatus.OK;
-	}
-	
-	@RequestMapping(value = "/articles", method = RequestMethod.PUT)
-	HttpStatus editArticle(@RequestBody Article article) {
-		articleRepository.save(article);
 		return HttpStatus.OK;
 	}
 	
@@ -57,10 +51,16 @@ public class TopGroceryController {
 		Collection<InventoryArticle> response = inventoryArticleRepository.findAll();
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	//TODO
-	@RequestMapping(value = "/inventory-articles", method = RequestMethod.POST)
+	
+	@RequestMapping(value = "/inventory-articles", method = {RequestMethod.POST, RequestMethod.PUT})
 	HttpStatus addInventoryArticle(@RequestBody InventoryArticle inventoryArticle) {
 		inventoryArticleRepository.save(inventoryArticle);
+		return HttpStatus.OK;
+	}
+	
+	@RequestMapping(value = "/inventory-articles", method = RequestMethod.DELETE)
+	HttpStatus deleteInventoryArticle(@RequestBody InventoryArticle inventoryArticle) {
+		inventoryArticleRepository.delete(inventoryArticle);
 		return HttpStatus.OK;
 	}
 	
@@ -69,13 +69,18 @@ public class TopGroceryController {
 		Collection<ShoppingListArticle> response = shoppingListArticleRepository.findAll();
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
-	//TODO
-//	@RequestMapping(value = "/shopping-list-articles", method = RequestMethod.POST)
-//	HttpStatus addShoppingListArticle(@RequestBody ShoppingListArticle shoppingListArticle) {
-//		Article article = articleRepository.findOne(shoppingListArticle.getArticle());
-//		shoppingListArticleRepository.save(shoppingListArticle);
-//		return HttpStatus.OK;
-//	}
+	
+	@RequestMapping(value = "/shopping-list-articles", method = {RequestMethod.POST, RequestMethod.PUT})
+	HttpStatus addShoppingListArticle(@RequestBody ShoppingListArticle shoppingListArticle) {
+		shoppingListArticleRepository.save(shoppingListArticle);
+		return HttpStatus.OK;
+	}
+	
+	@RequestMapping(value = "/shopping-list-articles", method = RequestMethod.DELETE)
+	HttpStatus deleteShoppingListArticle(@RequestBody ShoppingListArticle shoppingListArticle) {
+		shoppingListArticleRepository.delete(shoppingListArticle);
+		return HttpStatus.OK;
+	}
 	
 	//temporarily, only for presentation
 	private void addToInventory(Article article) {

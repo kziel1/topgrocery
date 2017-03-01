@@ -1,4 +1,4 @@
-package com.topdesk.topgrocery.model;
+package com.topdesk.topgrocery.entity;
 
 import java.util.Date;
 
