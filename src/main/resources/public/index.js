@@ -32,6 +32,20 @@ function addArticle() {
 	article.name = document.getElementById("article-name").value;
 	doRequest("POST", "articles", article, refreshTables);
 }
+function createArticleDeleteButton(article) {
+	var button = document.createElement("button");
+	var t = document.createTextNode("delete");
+	button.appendChild(t);
+	button.onclick = function () {
+		doRequest("DELETE", "articles", article, refreshTables);
+	};
+	return button;
+}
+function refreshTables() {
+	doGetRequest("GET", "articles", reloadArticlesTable);
+	doGetRequest("GET", "inventory-articles", reloadInventoryArticlesTable);
+	doGetRequest("GET", "shopping-list-articles", reloadShoppingListArticlesTable);
+}
 // function createArticleEditButton(article, cell) {
 // 	var button = document.createElement("button");
 // 	var editText = document.createTextNode("edit");
@@ -56,20 +70,6 @@ function addArticle() {
 // 	};
 // 	return button;
 // }
-function createArticleDeleteButton(article) {
-	var button = document.createElement("button");
-	var t = document.createTextNode("delete");
-	button.appendChild(t);
-	button.onclick = function () {
-		doRequest("DELETE", "articles", article, refreshTables);
-	};
-	return button;
-}
-function refreshTables() {
-	doGetRequest("GET", "articles", reloadArticlesTable);
-	doGetRequest("GET", "inventory-articles", reloadInventoryArticlesTable);
-	doGetRequest("GET", "shopping-list-articles", reloadShoppingListArticlesTable);
-}
 function reloadArticlesTable(articles) {
 	var i, row, cell;
 	var articleTableBody = document.getElementById("articles").getElementsByTagName('tbody')[0];
@@ -87,20 +87,36 @@ function reloadArticlesTable(articles) {
 		cell.appendChild(createArticleDeleteButton(article));
 	}
 }
+function updateInventoryArticleAmount(inventoryArticle) {
+	console.log(inventoryArticle);
+}
 function reloadInventoryArticlesTable(inventoryArticles) {
 	var i, row, cell;
 	var articleTableBody = document.getElementById("inventory").getElementsByTagName('tbody')[0];
 	articleTableBody.innerHTML = "";
 	for (i = 0; i < inventoryArticles.length; i++) {
+		var inventoryArticle = inventoryArticles[i];
 		row = articleTableBody.insertRow(articleTableBody.rows.length);
 		cell = row.insertCell(0);
-		cell.appendChild(document.createTextNode(inventoryArticles[i].id));
+		cell.appendChild(document.createTextNode(inventoryArticle.id));
 		cell = row.insertCell(1);
-		cell.appendChild(document.createTextNode(inventoryArticles[i].article.name));
+		cell.appendChild(document.createTextNode(inventoryArticle.article.name));
 		cell = row.insertCell(2);
-		cell.appendChild(document.createTextNode(inventoryArticles[i].amount));
+		var numberInput = document.createElement("input");
+		numberInput.setAttribute("type", "number");
+		numberInput.setAttribute("min", "0");
+		numberInput.setAttribute("max", "99");
+		numberInput.value = inventoryArticle.amount;
+		numberInput.onmouseup = function() {
+			var asd = inventoryArticle;
+			updateInventoryArticleAmount(asd);
+		}
+		cell.appendChild(numberInput);
 		cell = row.insertCell(3);
-		cell.appendChild(document.createTextNode(new Date(inventoryArticles[i].useBy).toLocaleDateString()));
+		var dateInput = document.createElement("input");
+		dateInput.setAttribute("type", "date");
+		dateInput.valueAsDate = new Date();
+		cell.appendChild(dateInput);
 	}
 }
 function reloadShoppingListArticlesTable(shoppingArticles) {

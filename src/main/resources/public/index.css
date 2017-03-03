@@ -18,12 +18,33 @@ body > div {
 	font-size: 1.2em;
 	margin: 10px 0 10px;
 }
-#inventory {
-	display: none;
-}
-#shopping-list {
-	display: none;
-}
+/*#articles:target {*/
+/*display: inline-block;*/
+/*}*/
+/*#articles:target ~ #show {*/
+/*display: none;*/
+/*}*/
+/*#articles {*/
+/*display: none;*/
+/*}*/
+/*#inventory:target {*/
+/*display: inline-block;*/
+/*}*/
+/*#inventory:target ~ #show {*/
+/*display: none;*/
+/*}*/
+/*#inventory {*/
+/*display: none;*/
+/*}*/
+/*#shopping-list:target {*/
+/*display: inline-block;*/
+/*}*/
+/*#shopping-list:target ~ #show {*/
+/*display: none;*/
+/*}*/
+/*#shopping-list {*/
+/*display: none;*/
+/*}*/
 a {
 	color: #0055aa;
 	text-decoration: none;
@@ -84,8 +105,14 @@ tr:hover td {
 td {
 	padding: 10px;
 }
-td:last-child, td:first-child {
+#articles td:last-child, td:first-child {
 	width: 1%;
+}
+#inventory td:last-child, #inventory td:nth-last-child(2), #inventory td:first-child {
+width: 1%;
+}
+#inventory td:nth-last-child(2){
+text-align: right;
 }
 input[type=text] {
 	border-radius: 5px;

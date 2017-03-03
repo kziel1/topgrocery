@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
+	<meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>TOPgrocery</title>
 	<link rel="stylesheet" href="index.css">
 	<link rel="icon" href="favicon.png">
@@ -10,11 +10,11 @@
 <body>
 <header>T<img id="egg" src="logo_egg.png">Pgrocery</header>
 <div id="navigation">
-	<a href="#inventory" id="show-inventory"> Inventory</a>
+	<a href="#inventory"> Inventory</a>
 	|
-	<a href="#shopping-list" id="show-shopping-list"> Shopping</a>
+	<a href="#shopping-list"> Shopping</a>
 	|
-	<a href="#articles" id="show-articles">Articles</a>
+	<a href="#articles">Articles</a>
 </div>
 <div id="articles">
 	<table>
@@ -50,7 +50,16 @@
 			<th>Use by</th>
 		</tr>
 		</thead>
-		<tbody></tbody>
+		<tbody>
+		<!--<tr>-->
+			<!--<td>asd</td>-->
+			<!--<td>asd</td>-->
+			<!--<td><input type="number" min="0" max="99"></td>-->
+			<!--<td><input type="date"></td>-->
+		<!--</tr>-->
+
+
+		</tbody>
 	</table>
 </div>
 <div id="shopping-list">
@@ -63,8 +72,43 @@
 			<th>Amount</th>
 		</tr>
 		</thead>
-		<tbody></tbody>
+		<tbody>
+		</tbody>
 	</table>
 </div>
 </body>
 </html>
+<!--<form>-->
+<!--<label for="zusatz">Zusatzschleim</label>-->
+<!--&lt;!&ndash;Das Attribut size sorgt dafür, dass mehrere Einträge sichtbar sind, ohne die Auswahlbox aufklappen zu müssen.-->
+<!--Aber erst durch multiple können auch mehrere ausgewählt werden. &ndash;&gt;-->
+<!--<select name="zusatz[]" multiple size="5" id="zusatz">-->
+<!--<optgroup label="The Good">-->
+<!--<option value="intelligent">intelligent</option>-->
+<!--<option value="gutaussehend">gutaussehend</option>-->
+<!--</optgroup>-->
+<!--<optgroup label="The Bad">-->
+<!--<option value="nach Käse riechend">nach Käse riechend</option>-->
+<!--<option value="langweilig">langweilig</option>-->
+<!--</optgroup>-->
+<!--<optgroup label="And The Creepy">-->
+<!--<option value="wohlgeformt">wohlgeformt</option>-->
+<!--<option value="schmackhaft">schmackhaft</option>-->
+<!--</optgroup>-->
+<!--</select>-->
+<!--<label for="zusatz">Zusatzschleim</label>-->
+<!--&lt;!&ndash;An einem Eingabefeld kannst du mit dem list-Attribut eine Liste von Voschlägen  angeben, die dem Benutzer bei der Eingabe gezeigt werden-->
+<!--Im Gegensatz zur Select Box kann er aber auch etwas ganz eigenes eingeben. &ndash;&gt;-->
+<!--<input type="text" list="adjektive" name="zusatz[]" id="zusatz">-->
+<!--&lt;!&ndash;Die Liste wird mit dem Tag datalist definiert. Pass auf, das option-Tag ist hier anders als bei select! &ndash;&gt;-->
+<!--<datalist id="adjektive">-->
+<!--<option value="intelligent"></option>-->
+<!--<option value="gutaussehend"></option>-->
+<!--<option value="nach Käse riechend"></option>-->
+<!--<option value="langweilig"></option>-->
+<!--<option value="wohlgeformt"></option>-->
+<!--<option value="schmackhaft"></option>-->
+<!--</datalist>-->
+<!--<label for="date">Datum</label>-->
+<!--<input type="date" name="date" id="date">-->
+<!--</form>-->

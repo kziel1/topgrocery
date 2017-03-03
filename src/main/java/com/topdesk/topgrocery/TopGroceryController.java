@@ -2,7 +2,6 @@ package com.topdesk.topgrocery;
 
 import java.util.Collection;
 import java.util.Date;
-import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -86,7 +85,7 @@ public class TopGroceryController {
 	private void addToInventory(Article article) {
 		InventoryArticle inventoryArticle = new InventoryArticle();
 		inventoryArticle.setArticle(article);
-		inventoryArticle.setAmount(new Random().nextInt(10) + 1);
+		inventoryArticle.setAmount(0);
 		inventoryArticle.setUseBy(new Date());
 		inventoryArticleRepository.save(inventoryArticle);
 	}
@@ -95,7 +94,7 @@ public class TopGroceryController {
 	private void addToShoppingList(Article article) {
 		ShoppingListArticle shoppingListArticle = new ShoppingListArticle();
 		shoppingListArticle.setArticle(article);
-		shoppingListArticle.setAmount(new Random().nextInt(10) + 1);
+		shoppingListArticle.setAmount(0);
 		shoppingListArticleRepository.save(shoppingListArticle);
 	}
 }
