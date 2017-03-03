@@ -32,30 +32,30 @@ function addArticle() {
 	article.name = document.getElementById("article-name").value;
 	doRequest("POST", "articles", article, refreshTables);
 }
-function createArticleEditButton(article, cell) {
-	var button = document.createElement("button");
-	var editText = document.createTextNode("edit");
-	var saveText = document.createTextNode("save");
-	var input = document.createElement("input");
-	button.appendChild(editText);
-	var editMode = true;
-	button.onclick = function () {
-		if (editMode) {
-			cell.replaceChild(input, cell.firstChild);
-			button.replaceChild(saveText, button.firstChild);
-			input.value = article.name;
-			editMode = false;
-		} else {
-			article.name = input.value;
-			var text = document.createTextNode(article.name);
-			cell.replaceChild(text, cell.firstChild);
-			button.replaceChild(editText, button.firstChild);
-			doRequest("PUT", "articles", article, refreshTables);
-			editMode = true;
-		}
-	};
-	return button;
-}
+// function createArticleEditButton(article, cell) {
+// 	var button = document.createElement("button");
+// 	var editText = document.createTextNode("edit");
+// 	var saveText = document.createTextNode("save");
+// 	var input = document.createElement("input");
+// 	button.appendChild(editText);
+// 	var editMode = true;
+// 	button.onclick = function () {
+// 		if (editMode) {
+// 			cell.replaceChild(input, cell.firstChild);
+// 			button.replaceChild(saveText, button.firstChild);
+// 			input.value = article.name;
+// 			editMode = false;
+// 		} else {
+// 			article.name = input.value;
+// 			var text = document.createTextNode(article.name);
+// 			cell.replaceChild(text, cell.firstChild);
+// 			button.replaceChild(editText, button.firstChild);
+// 			doRequest("PUT", "articles", article, refreshTables);
+// 			editMode = true;
+// 		}
+// 	};
+// 	return button;
+// }
 function createArticleDeleteButton(article) {
 	var button = document.createElement("button");
 	var t = document.createTextNode("delete");
@@ -73,7 +73,8 @@ function refreshTables() {
 function reloadArticlesTable(articles) {
 	var i, row, cell;
 	var articleTableBody = document.getElementById("articles").getElementsByTagName('tbody')[0];
-	articleTableBody.innerHTML = "";
+	// is it good way to save the first row?
+	articleTableBody.innerHTML = articleTableBody.rows[0].innerHTML;
 	for (i = 0; i < articles.length; i++) {
 		row = articleTableBody.insertRow(articleTableBody.rows.length);
 		cell = row.insertCell(0);
@@ -83,7 +84,6 @@ function reloadArticlesTable(articles) {
 		var articleNameCell = cell;
 		cell = row.insertCell(2);
 		var article = articles[i];
-		cell.appendChild(createArticleEditButton(article, articleNameCell));
 		cell.appendChild(createArticleDeleteButton(article));
 	}
 }

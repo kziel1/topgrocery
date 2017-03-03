@@ -4,29 +4,43 @@
 	<meta charset="UTF-8">
 	<title>TOPgrocery</title>
 	<link rel="stylesheet" href="index.css">
+	<link rel="icon" href="favicon.png">
 	<script src="index.js"></script>
 </head>
 <body>
-<div>
-	<table id="articles">
+<header>T<img id="egg" src="logo_egg.png">Pgrocery</header>
+<div id="navigation">
+	<a href="#inventory" id="show-inventory"> Inventory</a>
+	|
+	<a href="#shopping-list" id="show-shopping-list"> Shopping</a>
+	|
+	<a href="#articles" id="show-articles">Articles</a>
+</div>
+<div id="articles">
+	<table>
 		<caption>Articles</caption>
 		<thead>
 		<tr>
 			<th>Id</th>
 			<th>Name</th>
-			<th>Action</th>
+			<th class="action-cell">Action</th>
 		</tr>
 		</thead>
-		<tbody></tbody>
+		<tbody>
+		<tr>
+			<td></td>
+			<td>
+				<input type="text" name="name" id="article-name" placeholder="zB. Kartoffelsalat">
+			</td>
+			<td>
+				<button onclick="addArticle()">add</button>
+			</td>
+		</tr>
+		</tbody>
 	</table>
-	<label for="article-name">
-		Article name
-	</label>
-	<input type="text" name="name" id="article-name" placeholder="zB. Kartoffelsalat">
-	<button onclick="addArticle()">add</button>
 </div>
-<div>
-	<table id="inventory">
+<div id="inventory">
+	<table>
 		<caption>Inventory</caption>
 		<thead>
 		<tr>
@@ -39,8 +53,8 @@
 		<tbody></tbody>
 	</table>
 </div>
-<div>
-	<table id="shopping-list">
+<div id="shopping-list">
+	<table>
 		<caption>Shopping list</caption>
 		<thead>
 		<tr>
@@ -52,24 +66,5 @@
 		<tbody></tbody>
 	</table>
 </div>
-<form>
-	<label for="zusatz">Zusatzschleim</label>
-	<!--Das Attribut size sorgt dafür, dass mehrere Einträge sichtbar sind, ohne die Auswahlbox aufklappen zu müssen.
-	Aber erst durch multiple können auch mehrere ausgewählt werden. -->
-	<select name="zusatz[]" multiple size="5" id="zusatz">
-		<optgroup label="The Good">
-			<option value="intelligent">intelligent</option>
-			<option value="gutaussehend">gutaussehend</option>
-		</optgroup>
-		<optgroup label="The Bad">
-			<option value="nach Käse riechend">nach Käse riechend</option>
-			<option value="langweilig">langweilig</option>
-		</optgroup>
-		<optgroup label="And The Creepy">
-			<option value="wohlgeformt">wohlgeformt</option>
-			<option value="schmackhaft">schmackhaft</option>
-		</optgroup>
-	</select>
-</form>
 </body>
 </html>
