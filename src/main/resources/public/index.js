@@ -2,6 +2,8 @@ function doGetRequest(method, url, callback) {
 	"use strict";
 	var request = new XMLHttpRequest();
 	request.open(method, "http://localhost:8080/" + url, true);
+	request.setRequestHeader('Cache-Control', 'no-cache');
+	request.setRequestHeader('Pragma', 'no-cache');
 	request.onreadystatechange = function () {
 		if (request.readyState === 4 && request.status === 200) {
 			var articles = JSON.parse(request.responseText);
@@ -87,7 +89,9 @@ function reloadArticlesTable(articles) {
 	"use strict";
 	var i;
 	var articleTableBody = document.getElementById("articles").getElementsByTagName('tbody')[0];
-	articleTableBody.innerHTML = "";
+	while (articleTableBody.hasChildNodes()) {
+		articleTableBody.deleteRow(0);
+	}
 	for (i = 0; i < articles.length; i++) {
 		createArticlesTableItem(i, articles, articleTableBody)
 	}

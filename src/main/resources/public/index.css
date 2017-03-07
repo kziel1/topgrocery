@@ -49,7 +49,7 @@ thead {
 	color: white;
 	text-align: left;
 }
-thead > tr:first-child {
+thead > tr:first-child > th {
 	background-color: #0055aa;
 }
 th {
