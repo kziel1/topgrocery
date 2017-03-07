@@ -23,20 +23,19 @@
 		<tr>
 			<th>Id</th>
 			<th>Name</th>
-			<th class="action-cell">Action</th>
+			<th>Action</th>
+		</tr>
+		<tr>
+			<th></th>
+			<th>
+				<input type="text" name="name" id="article-name" placeholder="zB. Kartoffelsalat">
+			</th>
+			<th>
+				<button onclick="addArticle()">add</button>
+			</th>
 		</tr>
 		</thead>
-		<tbody>
-		<tr>
-			<td></td>
-			<td>
-				<input type="text" name="name" id="article-name" placeholder="zB. Kartoffelsalat">
-			</td>
-			<td>
-				<button onclick="addArticle()">add</button>
-			</td>
-		</tr>
-		</tbody>
+		<tbody></tbody>
 	</table>
 </div>
 <div id="inventory">
@@ -48,18 +47,21 @@
 			<th>Article</th>
 			<th>Amount</th>
 			<th>Use by</th>
+			<th>Action</th>
+		</tr>
+		<tr>
+			<th></th>
+			<th>
+				<select id="inventory-article-select"></select>
+			</th>
+			<th><input type="number" id="inventory-article-amount" min="1" max="99" value="1"></th>
+			<th><input type="date" id="inventory-article-use-by"></th>
+			<th>
+				<button onclick="addInventoryArticle()">add</button>
+			</th>
 		</tr>
 		</thead>
-		<tbody>
-		<!--<tr>-->
-			<!--<td>asd</td>-->
-			<!--<td>asd</td>-->
-			<!--<td><input type="number" min="0" max="99"></td>-->
-			<!--<td><input type="date"></td>-->
-		<!--</tr>-->
-
-
-		</tbody>
+		<tbody></tbody>
 	</table>
 </div>
 <div id="shopping-list">
@@ -78,37 +80,3 @@
 </div>
 </body>
 </html>
-<!--<form>-->
-<!--<label for="zusatz">Zusatzschleim</label>-->
-<!--&lt;!&ndash;Das Attribut size sorgt dafür, dass mehrere Einträge sichtbar sind, ohne die Auswahlbox aufklappen zu müssen.-->
-<!--Aber erst durch multiple können auch mehrere ausgewählt werden. &ndash;&gt;-->
-<!--<select name="zusatz[]" multiple size="5" id="zusatz">-->
-<!--<optgroup label="The Good">-->
-<!--<option value="intelligent">intelligent</option>-->
-<!--<option value="gutaussehend">gutaussehend</option>-->
-<!--</optgroup>-->
-<!--<optgroup label="The Bad">-->
-<!--<option value="nach Käse riechend">nach Käse riechend</option>-->
-<!--<option value="langweilig">langweilig</option>-->
-<!--</optgroup>-->
-<!--<optgroup label="And The Creepy">-->
-<!--<option value="wohlgeformt">wohlgeformt</option>-->
-<!--<option value="schmackhaft">schmackhaft</option>-->
-<!--</optgroup>-->
-<!--</select>-->
-<!--<label for="zusatz">Zusatzschleim</label>-->
-<!--&lt;!&ndash;An einem Eingabefeld kannst du mit dem list-Attribut eine Liste von Voschlägen  angeben, die dem Benutzer bei der Eingabe gezeigt werden-->
-<!--Im Gegensatz zur Select Box kann er aber auch etwas ganz eigenes eingeben. &ndash;&gt;-->
-<!--<input type="text" list="adjektive" name="zusatz[]" id="zusatz">-->
-<!--&lt;!&ndash;Die Liste wird mit dem Tag datalist definiert. Pass auf, das option-Tag ist hier anders als bei select! &ndash;&gt;-->
-<!--<datalist id="adjektive">-->
-<!--<option value="intelligent"></option>-->
-<!--<option value="gutaussehend"></option>-->
-<!--<option value="nach Käse riechend"></option>-->
-<!--<option value="langweilig"></option>-->
-<!--<option value="wohlgeformt"></option>-->
-<!--<option value="schmackhaft"></option>-->
-<!--</datalist>-->
-<!--<label for="date">Datum</label>-->
-<!--<input type="date" name="date" id="date">-->
-<!--</form>-->

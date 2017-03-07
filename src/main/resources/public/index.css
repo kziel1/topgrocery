@@ -18,33 +18,6 @@ body > div {
 	font-size: 1.2em;
 	margin: 10px 0 10px;
 }
-/*#articles:target {*/
-/*display: inline-block;*/
-/*}*/
-/*#articles:target ~ #show {*/
-/*display: none;*/
-/*}*/
-/*#articles {*/
-/*display: none;*/
-/*}*/
-/*#inventory:target {*/
-/*display: inline-block;*/
-/*}*/
-/*#inventory:target ~ #show {*/
-/*display: none;*/
-/*}*/
-/*#inventory {*/
-/*display: none;*/
-/*}*/
-/*#shopping-list:target {*/
-/*display: inline-block;*/
-/*}*/
-/*#shopping-list:target ~ #show {*/
-/*display: none;*/
-/*}*/
-/*#shopping-list {*/
-/*display: none;*/
-/*}*/
 a {
 	color: #0055aa;
 	text-decoration: none;
@@ -59,8 +32,11 @@ header {
 	font-size: 6em;
 }
 table {
+	background-color: white;
 	width: 100%;
 	border-collapse: collapse;
+	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
+	border-radius: 5px;
 }
 caption {
 	font-size: 1.2em;
@@ -70,11 +46,11 @@ caption {
 	text-align: left;
 }
 thead {
-	background-color: #0055aa;
 	color: white;
 	text-align: left;
-	box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.3);
-
+}
+thead > tr:first-child {
+	background-color: #0055aa;
 }
 th {
 	padding: 10px;
@@ -86,18 +62,10 @@ th:last-child {
 	border-radius: 0 5px 0 0;
 }
 tbody {
-	background-color: white;
 	color: #666;
-	box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.3);
 }
 tr:not(:last-child) {
 	border-bottom: 1px solid #ccc;
-}
-tr:last-child td:first-child {
-	border-radius: 0 0 0 5px;
-}
-tr:last-child td:last-child {
-	border-radius: 0 0 5px 0;
 }
 tr:hover td {
 	background-color: #ccc;
@@ -105,18 +73,37 @@ tr:hover td {
 td {
 	padding: 10px;
 }
-#articles td:last-child, td:first-child {
+#articles th:last-child, th:first-child {
 	width: 1%;
 }
-#inventory td:last-child, #inventory td:nth-last-child(2), #inventory td:first-child {
-width: 1%;
+#inventory th:last-child, #inventory th:nth-last-child(2), #inventory th:nth-last-child(3), #inventory th:first-child {
+	width: 1%;
 }
-#inventory td:nth-last-child(2){
-text-align: right;
+#inventory td:nth-last-child(3), #inventory thead tr:last-child th:nth-last-child(3) {
+	text-align: right;
 }
 input[type=text] {
 	border-radius: 5px;
 	width: 100%;
+	line-height: 1.7em;
+	border: 1px solid #0055aa;
+	padding-left: 5px;
+}
+select {
+	border-radius: 5px;
+	width: 100%;
+	height: 1.7em;
+	border: 1px solid #0055aa;
+	padding-left: 5px;
+}
+th input[type=number] {
+	border-radius: 5px;
+	line-height: 1.7em;
+	border: 1px solid #0055aa;
+	padding-left: 5px;
+}
+th input[type=date] {
+	border-radius: 5px;
 	line-height: 1.7em;
 	border: 1px solid #0055aa;
 	padding-left: 5px;
@@ -133,6 +120,7 @@ button {
 }
 button:focus {
 	outline: none;
+	background-color: #0066bb;
 }
 button:hover {
 	background-color: #0066bb;

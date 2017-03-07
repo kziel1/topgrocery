@@ -1,7 +1,6 @@
 package com.topdesk.topgrocery;
 
 import java.util.Collection;
-import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -32,10 +31,8 @@ public class TopGroceryController {
 	}
 	
 	@RequestMapping(value = "/articles", method = {RequestMethod.POST, RequestMethod.PUT})
-	HttpStatus addArticle(@RequestBody Article article) {
+	HttpStatus saveArticle(@RequestBody Article article) {
 		articleRepository.save(article);
-		addToInventory(article);
-		addToShoppingList(article);
 		return HttpStatus.OK;
 	}
 	
@@ -52,7 +49,7 @@ public class TopGroceryController {
 	}
 	
 	@RequestMapping(value = "/inventory-articles", method = {RequestMethod.POST, RequestMethod.PUT})
-	HttpStatus addInventoryArticle(@RequestBody InventoryArticle inventoryArticle) {
+	HttpStatus saveInventoryArticle(@RequestBody InventoryArticle inventoryArticle) {
 		inventoryArticleRepository.save(inventoryArticle);
 		return HttpStatus.OK;
 	}
@@ -79,22 +76,5 @@ public class TopGroceryController {
 	HttpStatus deleteShoppingListArticle(@RequestBody ShoppingListArticle shoppingListArticle) {
 		shoppingListArticleRepository.delete(shoppingListArticle);
 		return HttpStatus.OK;
-	}
-	
-	//temporarily, only for presentation
-	private void addToInventory(Article article) {
-		InventoryArticle inventoryArticle = new InventoryArticle();
-		inventoryArticle.setArticle(article);
-		inventoryArticle.setAmount(0);
-		inventoryArticle.setUseBy(new Date());
-		inventoryArticleRepository.save(inventoryArticle);
-	}
-	
-	//temporarily, only for presentation
-	private void addToShoppingList(Article article) {
-		ShoppingListArticle shoppingListArticle = new ShoppingListArticle();
-		shoppingListArticle.setArticle(article);
-		shoppingListArticle.setAmount(0);
-		shoppingListArticleRepository.save(shoppingListArticle);
 	}
 }

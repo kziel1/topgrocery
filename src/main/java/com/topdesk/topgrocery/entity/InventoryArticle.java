@@ -2,7 +2,6 @@ package com.topdesk.topgrocery.entity;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -25,7 +24,7 @@ public class InventoryArticle {
 	@GeneratedValue
 	@Column(name = "id")
 	private long id;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@OnDelete(action = OnDeleteAction.CASCADE)
 	@JoinColumn(foreignKey = @ForeignKey(name = "ia_article_id"))
 	private Article article;
