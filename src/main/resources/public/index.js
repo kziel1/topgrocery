@@ -56,9 +56,7 @@ function addArticle() {
 	"use strict";
 	var article = {};
 	article.name = document.getElementById("article-name").value;
-	if (article.name !== "") {
-		doRequest("POST", "articles", article, refreshTables);
-	}
+	doRequest("POST", "articles", article, refreshTables);
 }
 function addInventoryArticle() {
 	"use strict";
