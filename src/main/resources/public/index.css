@@ -18,6 +18,13 @@ body > div {
 	font-size: 1.2em;
 	margin: 10px 0 10px;
 }
+#shoppping-list-parameters {
+	float: right;
+}
+#shopping-list-generator-parameters-label {
+	color: #666;
+	padding-right: 10px;
+}
 a {
 	color: #0055aa;
 	text-decoration: none;
@@ -82,6 +89,12 @@ td {
 #inventory td:nth-last-child(3), #inventory thead tr:last-child th:nth-last-child(3) {
 	text-align: right;
 }
+#shopping-list th:last-child, #shopping-list th:nth-last-child(2) {
+	width: 1%
+}
+#shopping-list td:nth-last-child(2), #shopping-list thead tr:last-child th:nth-last-child(2) {
+	text-align: right;
+}
 input[type=text] {
 	border-radius: 5px;
 	width: 100%;
@@ -138,5 +151,8 @@ button:active {
 	header img {
 		height: 0.7em;
 		width: 0.7em;
+	}
+	#shopping-list-generator-parameters-label {
+		display: none;
 	}
 }

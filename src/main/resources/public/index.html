@@ -66,16 +66,36 @@
 </div>
 <div id="shopping-list">
 	<table>
-		<caption>Shopping list</caption>
+		<caption>
+			Shopping list
+			<span id="shoppping-list-parameters">
+				<span id="shopping-list-generator-parameters-label">
+					participants/vegetarians
+				</span>
+				<input type="number" id="shopping-list-participant-amount" min="1" max="99" placeholder="part.">
+				<input type="number" id="shopping-list-vegetarian-amount" min="1" max="99" placeholder="veg.">
+				<button onclick="generateShoppingList()">generate</button>
+			</span>
+		</caption>
 		<thead>
 		<tr>
 			<th>Id</th>
 			<th>Article</th>
 			<th>Amount</th>
+			<th>Action</th>
+		</tr>
+		<tr>
+			<th></th>
+			<th>
+				<select id="shopping-list-article-select"></select>
+			</th>
+			<th><input type="number" id="shopping-list-article-amount" min="1" max="99" value="1"></th>
+			<th>
+				<button onclick="addShoppingListArticle()">add</button>
+			</th>
 		</tr>
 		</thead>
-		<tbody>
-		</tbody>
+		<tbody></tbody>
 	</table>
 </div>
 </body>

@@ -30,11 +30,27 @@ function doRequest(method, url, data, callback) {
 		}
 	};
 }
+function populateArticlesSelects(articles) {
+	"use strict";
+	var inventoryArticleSelect = document.getElementById("inventory-article-select");
+	var shoppingListArticleSelect = document.getElementById("shopping-list-article-select");
+	var i;
+	inventoryArticleSelect.innerHTML = "";
+	shoppingListArticleSelect.innerHTML = "";
+	for (i = 0; i < articles.length; i++) {
+		var option = document.createElement("option");
+		option.text = articles[i].name;
+		option.value = JSON.stringify(articles[i]);
+		inventoryArticleSelect.appendChild(option);
+		shoppingListArticleSelect.appendChild(option.cloneNode(true));
+	}
+}
 function refreshTables() {
 	"use strict";
 	doGetRequest("GET", "articles", reloadArticlesTable);
 	doGetRequest("GET", "inventory-articles", reloadInventoryArticlesTable);
 	doGetRequest("GET", "shopping-list-articles", reloadShoppingListArticlesTable);
+	doGetRequest("GET", "articles", populateArticlesSelects);
 }
 function addArticle() {
 	"use strict";
@@ -130,33 +146,50 @@ function createInventoryTableItem(i, inventoryArticles, articleTableBody) {
 	cell = row.insertCell(4);
 	cell.appendChild(createInventoryArticleDeleteButton(inventoryArticle));
 }
-function populateInventoryArticlesSelect(articles) {
-	"use strict";
-	var inventoryArticleSelect = document.getElementById("inventory-article-select");
-	var i;
-	inventoryArticleSelect.innerHTML = "";
-	for (i = 0; i < articles.length; i++) {
-		var option = document.createElement("option");
-		option.text = articles[i].name;
-		option.value = JSON.stringify(articles[i]);
-		inventoryArticleSelect.appendChild(option);
-	}
-}
 function reloadInventoryArticlesTable(inventoryArticles) {
 	"use strict";
 	var i;
-	doGetRequest("GET", "articles", populateInventoryArticlesSelect);
 	var articleTableBody = document.getElementById("inventory").getElementsByTagName('tbody')[0];
-	articleTableBody.innerHTML = "";
+	while (articleTableBody.hasChildNodes()) {
+		articleTableBody.deleteRow(0);
+	}
 	for (i = 0; i < inventoryArticles.length; i++) {
 		createInventoryTableItem(i, inventoryArticles, articleTableBody);
 	}
 }
+function generateShoppingList() {
+	"use strict";
+	var shoppingListProperties = {};
+	shoppingListProperties.participantsAmount = document.getElementById("shopping-list-participant-amount").value;
+	shoppingListProperties.vegetariansAmount = document.getElementById("shopping-list-vegetarian-amount").value;
+	doRequest("PUT", "shopping-list-generation", shoppingListProperties, refreshTables);
+}
+function addShoppingListArticle() {
+	"use strict";
+	var shoppingListArticle = {};
+	var article = JSON.parse(document.getElementById("shopping-list-article-select").value);
+	shoppingListArticle.article = article;
+	shoppingListArticle.amount = document.getElementById("shopping-list-article-amount").value;
+	doRequest("POST", "shopping-list-articles", shoppingListArticle, refreshTables);
+}
+function createShoppingListArticleDeleteButton(shoppingListArticle) {
+	"use strict";
+	var button = document.createElement("button");
+	var t = document.createTextNode("delete");
+	button.appendChild(t);
+	button.onclick = function () {
+		doRequest("DELETE", "shopping-list-articles", shoppingListArticle, refreshTables);
+	};
+	return button;
+}
 function reloadShoppingListArticlesTable(shoppingArticles) {
 	"use strict";
 	var i, row, cell;
+	doGetRequest("GET", "articles", populateArticlesSelects);
 	var articleTableBody = document.getElementById("shopping-list").getElementsByTagName('tbody')[0];
-	articleTableBody.innerHTML = "";
+	while (articleTableBody.hasChildNodes()) {
+		articleTableBody.deleteRow(0);
+	}
 	for (i = 0; i < shoppingArticles.length; i++) {
 		row = articleTableBody.insertRow(articleTableBody.rows.length);
 		cell = row.insertCell(0);
@@ -165,6 +198,9 @@ function reloadShoppingListArticlesTable(shoppingArticles) {
 		cell.appendChild(document.createTextNode(shoppingArticles[i].article.name));
 		cell = row.insertCell(2);
 		cell.appendChild(document.createTextNode(shoppingArticles[i].amount));
+		cell = row.insertCell(3);
+		var shoppingListArticle = shoppingArticles[i];
+		cell.appendChild(createShoppingListArticleDeleteButton(shoppingListArticle));
 	}
 }
 window.onload = function () {

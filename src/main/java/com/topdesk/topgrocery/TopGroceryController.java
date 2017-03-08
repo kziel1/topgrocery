@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.topdesk.topgrocery.entity.Article;
 import com.topdesk.topgrocery.entity.InventoryArticle;
 import com.topdesk.topgrocery.entity.ShoppingListArticle;
+import com.topdesk.topgrocery.entity.ShoppingListProperties;
 
 @RestController
 public class TopGroceryController {
@@ -23,6 +24,8 @@ public class TopGroceryController {
 	private JpaRepository<ShoppingListArticle, Long> shoppingListArticleRepository;
 	@Autowired
 	private JpaRepository<InventoryArticle, Long> inventoryArticleRepository;
+	@Autowired
+	private TopGroceryShoppingListGenerator topGroceryShoppingListGenerator;
 	
 	@RequestMapping(value = "/articles", method = RequestMethod.GET)
 	ResponseEntity<Collection<Article>> getArticles() {
@@ -75,6 +78,12 @@ public class TopGroceryController {
 	@RequestMapping(value = "/shopping-list-articles", method = RequestMethod.DELETE)
 	HttpStatus deleteShoppingListArticle(@RequestBody ShoppingListArticle shoppingListArticle) {
 		shoppingListArticleRepository.delete(shoppingListArticle);
+		return HttpStatus.OK;
+	}
+	
+	@RequestMapping(value = "/shopping-list-generation", method = RequestMethod.PUT)
+	HttpStatus generateShoppingList(@RequestBody ShoppingListProperties shoppingListProperties) {
+		topGroceryShoppingListGenerator.generateShoppingList(shoppingListProperties);
 		return HttpStatus.OK;
 	}
 }
