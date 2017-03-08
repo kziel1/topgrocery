@@ -1,19 +1,21 @@
-function doGetRequest(method, url, callback) {
+function doGetRequest(url, callback) {
 	"use strict";
 	var request = new XMLHttpRequest();
-	request.open(method, "http://localhost:8080/" + url, true);
+	request.open("GET", "http://localhost:8080/" + url, true);
 	request.setRequestHeader('Cache-Control', 'no-cache');
 	request.setRequestHeader('Pragma', 'no-cache');
 	request.onreadystatechange = function () {
 		if (request.readyState === 4 && request.status === 200) {
 			var articles = JSON.parse(request.responseText);
 			callback(articles);
-		} else if (request.readyState === 4 && request.status !== 200) {
+		}
+		else if (request.readyState === 4 && request.status !== 200) {
 			console.log(request.status);
 		}
 	};
 	request.send();
 }
+
 function doRequest(method, url, data, callback) {
 	"use strict";
 	var request = new XMLHttpRequest();
@@ -25,11 +27,13 @@ function doRequest(method, url, data, callback) {
 			if (callback) {
 				callback();
 			}
-		} else if (request.readyState === 4 && request.status !== 200) {
+		}
+		else if (request.readyState === 4 && request.status !== 200) {
 			console.log(request.status);
 		}
 	};
 }
+
 function populateArticlesSelects(articles) {
 	"use strict";
 	var inventoryArticleSelect = document.getElementById("inventory-article-select");
@@ -47,17 +51,19 @@ function populateArticlesSelects(articles) {
 }
 function refreshTables() {
 	"use strict";
-	doGetRequest("GET", "articles", reloadArticlesTable);
-	doGetRequest("GET", "inventory-articles", reloadInventoryArticlesTable);
-	doGetRequest("GET", "shopping-list-articles", reloadShoppingListArticlesTable);
-	doGetRequest("GET", "articles", populateArticlesSelects);
+	doGetRequest("articles", reloadArticlesTable);
+	doGetRequest("inventory-articles", reloadInventoryArticlesTable);
+	doGetRequest("shopping-list-articles", reloadShoppingListArticlesTable);
+	doGetRequest("articles", populateArticlesSelects);
 }
+
 function addArticle() {
 	"use strict";
 	var article = {};
 	article.name = document.getElementById("article-name").value;
 	doRequest("POST", "articles", article, refreshTables);
 }
+
 function addInventoryArticle() {
 	"use strict";
 	var inventoryArticle = {};
@@ -67,38 +73,44 @@ function addInventoryArticle() {
 	inventoryArticle.useBy = document.getElementById("inventory-article-use-by").value;
 	doRequest("POST", "inventory-articles", inventoryArticle, refreshTables);
 }
+
+function createDeleteButton(onclick) {
+	"use strict";
+	var button = document.createElement("button");
+	var textNode = document.createTextNode("delete");
+	button.appendChild(textNode);
+	button.onclick = onclick;
+	return button;
+}
+
 function createArticleDeleteButton(article) {
 	"use strict";
-	var button = document.createElement("button");
-	var t = document.createTextNode("delete");
-	button.appendChild(t);
-	button.onclick = function () {
+	var onclick = function () {
 		doRequest("DELETE", "articles", article, refreshTables);
 	};
-	return button;
+	return createDeleteButton(onclick);
 }
+
 function createInventoryArticleDeleteButton(inventoryArticle) {
 	"use strict";
-	var button = document.createElement("button");
-	var t = document.createTextNode("delete");
-	button.appendChild(t);
-	button.onclick = function () {
+	var onclick = function () {
 		doRequest("DELETE", "inventory-articles", inventoryArticle, refreshTables);
 	};
-	return button;
+	return createDeleteButton(onclick);
 }
-function createArticlesTableItem(i, articles, articleTableBody) {
+
+function createArticlesTableItem(article, articleTableBody) {
 	"use strict";
 	var row, cell;
 	row = articleTableBody.insertRow(articleTableBody.rows.length);
 	cell = row.insertCell(0);
-	cell.appendChild(document.createTextNode(articles[i].id));
+	cell.appendChild(document.createTextNode(article.id));
 	cell = row.insertCell(1);
-	cell.appendChild(document.createTextNode(articles[i].name));
+	cell.appendChild(document.createTextNode(article.name));
 	cell = row.insertCell(2);
-	var article = articles[i];
 	cell.appendChild(createArticleDeleteButton(article));
 }
+
 function reloadArticlesTable(articles) {
 	"use strict";
 	var i;
@@ -107,19 +119,20 @@ function reloadArticlesTable(articles) {
 		articleTableBody.deleteRow(0);
 	}
 	for (i = 0; i < articles.length; i++) {
-		createArticlesTableItem(i, articles, articleTableBody)
+		createArticlesTableItem(articles[i], articleTableBody)
 	}
 }
-function createInventoryTableItem(i, inventoryArticles, articleTableBody) {
+
+function createInventoryTableItem(inventoryArticle, articleTableBody) {
 	"use strict";
 	var row, cell;
-	var inventoryArticle = inventoryArticles[i];
 	row = articleTableBody.insertRow(articleTableBody.rows.length);
 	cell = row.insertCell(0);
 	cell.appendChild(document.createTextNode(inventoryArticle.id));
 	cell = row.insertCell(1);
 	cell.appendChild(document.createTextNode(inventoryArticle.article.name));
 	cell = row.insertCell(2);
+	
 	var numberInput = document.createElement("input");
 	numberInput.setAttribute("type", "number");
 	numberInput.setAttribute("min", "0");
@@ -131,6 +144,7 @@ function createInventoryTableItem(i, inventoryArticles, articleTableBody) {
 	};
 	cell.appendChild(numberInput);
 	cell = row.insertCell(3);
+	
 	var dateInput = document.createElement("input");
 	dateInput.setAttribute("type", "date");
 	if (inventoryArticle.useBy !== null) {
@@ -147,14 +161,16 @@ function createInventoryTableItem(i, inventoryArticles, articleTableBody) {
 function reloadInventoryArticlesTable(inventoryArticles) {
 	"use strict";
 	var i;
+	doGetRequest("articles", populateArticlesSelects);
 	var articleTableBody = document.getElementById("inventory").getElementsByTagName('tbody')[0];
 	while (articleTableBody.hasChildNodes()) {
 		articleTableBody.deleteRow(0);
 	}
 	for (i = 0; i < inventoryArticles.length; i++) {
-		createInventoryTableItem(i, inventoryArticles, articleTableBody);
+		createInventoryTableItem(inventoryArticles[i], articleTableBody);
 	}
 }
+
 function generateShoppingList() {
 	"use strict";
 	var shoppingListProperties = {};
@@ -183,7 +199,7 @@ function createShoppingListArticleDeleteButton(shoppingListArticle) {
 function reloadShoppingListArticlesTable(shoppingArticles) {
 	"use strict";
 	var i, row, cell;
-	doGetRequest("GET", "articles", populateArticlesSelects);
+	doGetRequest("articles", populateArticlesSelects);
 	var articleTableBody = document.getElementById("shopping-list").getElementsByTagName('tbody')[0];
 	while (articleTableBody.hasChildNodes()) {
 		articleTableBody.deleteRow(0);
@@ -201,6 +217,7 @@ function reloadShoppingListArticlesTable(shoppingArticles) {
 		cell.appendChild(createShoppingListArticleDeleteButton(shoppingListArticle));
 	}
 }
+
 window.onload = function () {
 	"use strict";
 	refreshTables();
