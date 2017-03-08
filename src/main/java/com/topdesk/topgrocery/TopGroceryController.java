@@ -2,6 +2,7 @@ package com.topdesk.topgrocery;
 
 import java.util.Collection;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.http.HttpStatus;
@@ -34,9 +35,16 @@ public class TopGroceryController {
 	}
 	
 	@RequestMapping(value = "/articles", method = {RequestMethod.POST, RequestMethod.PUT})
-	HttpStatus saveArticle(@RequestBody Article article) {
-		articleRepository.save(article);
-		return HttpStatus.OK;
+	ResponseEntity saveArticle(@RequestBody Article article) {
+		HttpStatus httpStatus;
+		if (StringUtils.isBlank(article.getName())) {
+			httpStatus = HttpStatus.BAD_REQUEST;
+		}
+		else {
+			articleRepository.save(article);
+			httpStatus = HttpStatus.OK;
+		}
+		return new ResponseEntity(httpStatus);
 	}
 	
 	@RequestMapping(value = "/articles", method = RequestMethod.DELETE)
