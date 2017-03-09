@@ -115,11 +115,11 @@ function createArticlesTableItem(article, articleTableBody) {
 
 function reloadArticlesTable(articles) {
 	"use strict";
-	var i;
 	var articleTableBody = document.getElementById("articles").getElementsByTagName('tbody')[0];
 	while (articleTableBody.hasChildNodes()) {
 		articleTableBody.deleteRow(0);
 	}
+	var i;
 	for (i = 0; i < articles.length; i++) {
 		createArticlesTableItem(articles[i], articleTableBody)
 	}
@@ -164,12 +164,12 @@ function createInventoryTableItem(inventoryArticle, articleTableBody) {
 
 function reloadInventoryArticlesTable(inventoryArticles) {
 	"use strict";
-	var i;
 	doGetRequest("articles", populateArticlesSelects);
 	var articleTableBody = document.getElementById("inventory").getElementsByTagName('tbody')[0];
 	while (articleTableBody.hasChildNodes()) {
 		articleTableBody.deleteRow(0);
 	}
+	var i;
 	for (i = 0; i < inventoryArticles.length; i++) {
 		createInventoryTableItem(inventoryArticles[i], articleTableBody);
 	}
@@ -202,12 +202,12 @@ function createShoppingListArticleDeleteButton(shoppingListArticle) {
 
 function reloadShoppingListArticlesTable(shoppingArticles) {
 	"use strict";
-	var i, row, cell;
 	doGetRequest("articles", populateArticlesSelects);
 	var articleTableBody = document.getElementById("shopping-list").getElementsByTagName('tbody')[0];
 	while (articleTableBody.hasChildNodes()) {
 		articleTableBody.deleteRow(0);
 	}
+	var i, row, cell;
 	for (i = 0; i < shoppingArticles.length; i++) {
 		row = articleTableBody.insertRow(articleTableBody.rows.length);
 		cell = row.insertCell(0);

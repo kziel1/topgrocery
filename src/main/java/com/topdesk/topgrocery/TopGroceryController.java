@@ -35,20 +35,17 @@ public class TopGroceryController {
 	}
 	
 	@RequestMapping(value = "/articles", method = {RequestMethod.POST, RequestMethod.PUT})
-	ResponseEntity saveArticle(@RequestBody Article article) {
-		HttpStatus httpStatus;
+	ResponseEntity<Void> saveArticle(@RequestBody Article article) {
 		if (StringUtils.isBlank(article.getName())) {
-			httpStatus = HttpStatus.BAD_REQUEST;
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
-		else {
-			boolean nameDuplicated = articleRepository.findAll().stream()
-					.anyMatch(a -> a.getName().equals(article.getName()));
-			if (!nameDuplicated) {
-				articleRepository.save(article);
-			}
-			httpStatus = HttpStatus.OK;
+		boolean nameDuplicated = articleRepository.findAll()
+			.stream()
+			.anyMatch(a -> a.getName().equals(article.getName()));
+		if (!nameDuplicated) {
+			articleRepository.save(article);
 		}
-		return new ResponseEntity(httpStatus);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/articles", method = RequestMethod.DELETE)
