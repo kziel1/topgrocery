@@ -98,7 +98,7 @@ th:last-child {
 tbody {
 	color: #666;
 }
-tr:not(:last-child) {
+tr {
 	border-bottom: 1px solid #ccc;
 }
 tr:hover td {
@@ -122,31 +122,16 @@ td {
 #shopping-list td:nth-last-child(2), #shopping-list thead tr:last-child th:nth-last-child(2) {
 	text-align: right;
 }
-input[type=text] {
+input, select {
 	border-radius: 5px;
 	width: 100%;
+	height: 2em;
 	line-height: 1.7em;
 	border: 1px solid #0055aa;
 	padding-left: 5px;
 }
-select {
-	border-radius: 5px;
-	width: 100%;
-	height: 1.7em;
-	border: 1px solid #0055aa;
-	padding-left: 5px;
-}
-th input[type=number] {
-	border-radius: 5px;
-	line-height: 1.7em;
-	border: 1px solid #0055aa;
-	padding-left: 5px;
-}
-th input[type=date] {
-	border-radius: 5px;
-	line-height: 1.7em;
-	border: 1px solid #0055aa;
-	padding-left: 5px;
+caption input {
+	width: 4em;
 }
 button {
 	line-height: 1.7em;
@@ -158,11 +143,8 @@ button {
 	box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
 	font-weight: bold;
 }
-button:focus {
+button:focus, button:hover {
 	outline: none;
-	background-color: #0066bb;
-}
-button:hover {
 	background-color: #0066bb;
 }
 button:active {

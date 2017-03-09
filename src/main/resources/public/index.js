@@ -1,9 +1,7 @@
 function doGetRequest(url, callback) {
 	"use strict";
 	var request = new XMLHttpRequest();
-	// request.open("GET", "http://localhost:8080/" + url, true);
-	// request.open("GET", "http://10.2.0.181:8080/" + url, true);
-	request.open("GET", "http://pc1744:8080/" + url, true);
+	request.open("GET", url, true);
 	request.setRequestHeader('Cache-Control', 'no-cache');
 	request.setRequestHeader('Pragma', 'no-cache');
 	request.onreadystatechange = function () {
@@ -21,9 +19,7 @@ function doGetRequest(url, callback) {
 function doRequest(method, url, data, callback) {
 	"use strict";
 	var request = new XMLHttpRequest();
-	// request.open(method, "http://localhost:8080/" + url, true);
-	// request.open(method, "http://10.2.0.181:8080/" + url, true);
-	request.open(method, "http://pc1744:8080/" + url, true);
+	request.open(method, url, true);
 	request.setRequestHeader("Content-type", "application/json");
 	request.send(JSON.stringify(data));
 	request.onreadystatechange = function () {
@@ -45,8 +41,9 @@ function populateArticlesSelects(articles) {
 	var i;
 	inventoryArticleSelect.innerHTML = "";
 	shoppingListArticleSelect.innerHTML = "";
+	var option;
 	for (i = 0; i < articles.length; i++) {
-		var option = document.createElement("option");
+		option = document.createElement("option");
 		option.text = articles[i].name;
 		option.value = JSON.stringify(articles[i]);
 		inventoryArticleSelect.appendChild(option);
@@ -55,17 +52,16 @@ function populateArticlesSelects(articles) {
 }
 function refreshTables() {
 	"use strict";
-	doGetRequest("articles", reloadArticlesTable);
-	doGetRequest("inventory-articles", reloadInventoryArticlesTable);
-	doGetRequest("shopping-list-articles", reloadShoppingListArticlesTable);
-	doGetRequest("articles", populateArticlesSelects);
+	doGetRequest("/articles", reloadArticlesTable);
+	doGetRequest("/inventory-articles", reloadInventoryArticlesTable);
+	doGetRequest("/shopping-list-articles", reloadShoppingListArticlesTable);
 }
 
 function addArticle() {
 	"use strict";
 	var article = {};
 	article.name = document.getElementById("article-name").value;
-	doRequest("POST", "articles", article, refreshTables);
+	doRequest("POST", "/articles", article, refreshTables);
 }
 
 function addInventoryArticle() {
@@ -75,7 +71,7 @@ function addInventoryArticle() {
 	inventoryArticle.article = article;
 	inventoryArticle.amount = document.getElementById("inventory-article-amount").value;
 	inventoryArticle.useBy = document.getElementById("inventory-article-use-by").value;
-	doRequest("POST", "inventory-articles", inventoryArticle, refreshTables);
+	doRequest("POST", "/inventory-articles", inventoryArticle, refreshTables);
 }
 
 function createDeleteButton(onclick) {
@@ -90,7 +86,7 @@ function createDeleteButton(onclick) {
 function createArticleDeleteButton(article) {
 	"use strict";
 	var onclick = function () {
-		doRequest("DELETE", "articles", article, refreshTables);
+		doRequest("DELETE", "/articles", article, refreshTables);
 	};
 	return createDeleteButton(onclick);
 }
@@ -98,7 +94,7 @@ function createArticleDeleteButton(article) {
 function createInventoryArticleDeleteButton(inventoryArticle) {
 	"use strict";
 	var onclick = function () {
-		doRequest("DELETE", "inventory-articles", inventoryArticle, refreshTables);
+		doRequest("DELETE", "/inventory-articles", inventoryArticle, refreshTables);
 	};
 	return createDeleteButton(onclick);
 }
@@ -117,13 +113,14 @@ function createArticlesTableItem(article, articleTableBody) {
 
 function reloadArticlesTable(articles) {
 	"use strict";
+	populateArticlesSelects(articles);
 	var articleTableBody = document.getElementById("articles").getElementsByTagName('tbody')[0];
 	while (articleTableBody.hasChildNodes()) {
 		articleTableBody.deleteRow(0);
 	}
 	var i;
 	for (i = 0; i < articles.length; i++) {
-		createArticlesTableItem(articles[i], articleTableBody)
+		createArticlesTableItem(articles[i], articleTableBody);
 	}
 }
 
@@ -144,7 +141,7 @@ function createInventoryTableItem(inventoryArticle, articleTableBody) {
 	numberInput.value = inventoryArticle.amount;
 	numberInput.onchange = function () {
 		inventoryArticle.amount = numberInput.value;
-		doRequest("PUT", "inventory-articles", inventoryArticle, refreshTables);
+		doRequest("PUT", "/inventory-articles", inventoryArticle, refreshTables);
 	};
 	cell.appendChild(numberInput);
 	
@@ -156,7 +153,7 @@ function createInventoryTableItem(inventoryArticle, articleTableBody) {
 	}
 	dateInput.onchange = function () {
 		inventoryArticle.useBy = dateInput.valueAsDate;
-		doRequest("PUT", "inventory-articles", inventoryArticle, refreshTables);
+		doRequest("PUT", "/inventory-articles", inventoryArticle, refreshTables);
 	};
 	cell.appendChild(dateInput);
 	
@@ -166,7 +163,7 @@ function createInventoryTableItem(inventoryArticle, articleTableBody) {
 
 function reloadInventoryArticlesTable(inventoryArticles) {
 	"use strict";
-	doGetRequest("articles", populateArticlesSelects);
+	doGetRequest("/articles", populateArticlesSelects);
 	var articleTableBody = document.getElementById("inventory").getElementsByTagName('tbody')[0];
 	while (articleTableBody.hasChildNodes()) {
 		articleTableBody.deleteRow(0);
@@ -182,7 +179,7 @@ function generateShoppingList() {
 	var shoppingListProperties = {};
 	shoppingListProperties.participantCount = document.getElementById("shopping-list-participant-count").value;
 	shoppingListProperties.vegetarianCount = document.getElementById("shopping-list-vegetarian-count").value;
-	doRequest("PUT", "shopping-list-generation", shoppingListProperties, refreshTables);
+	doRequest("PUT", "/shopping-list-generation", shoppingListProperties, refreshTables);
 }
 
 function addShoppingListArticle() {
@@ -191,25 +188,24 @@ function addShoppingListArticle() {
 	var article = JSON.parse(document.getElementById("shopping-list-article-select").value);
 	shoppingListArticle.article = article;
 	shoppingListArticle.amount = document.getElementById("shopping-list-article-amount").value;
-	doRequest("POST", "shopping-list-articles", shoppingListArticle, refreshTables);
+	doRequest("POST", "/shopping-list-articles", shoppingListArticle, refreshTables);
 }
 
 function createShoppingListArticleDeleteButton(shoppingListArticle) {
 	"use strict";
 	var onclick = function () {
-		doRequest("DELETE", "shopping-list-articles", shoppingListArticle, refreshTables);
+		doRequest("DELETE", "/shopping-list-articles", shoppingListArticle, refreshTables);
 	};
 	return createDeleteButton(onclick);
 }
 
 function reloadShoppingListArticlesTable(shoppingArticles) {
 	"use strict";
-	doGetRequest("articles", populateArticlesSelects);
 	var articleTableBody = document.getElementById("shopping-list").getElementsByTagName('tbody')[0];
 	while (articleTableBody.hasChildNodes()) {
 		articleTableBody.deleteRow(0);
 	}
-	var i, row, cell;
+	var i, row, cell, shoppingListArticle;
 	for (i = 0; i < shoppingArticles.length; i++) {
 		row = articleTableBody.insertRow(articleTableBody.rows.length);
 		cell = row.insertCell(0);
@@ -219,7 +215,7 @@ function reloadShoppingListArticlesTable(shoppingArticles) {
 		cell = row.insertCell(2);
 		cell.appendChild(document.createTextNode(shoppingArticles[i].amount));
 		cell = row.insertCell(3);
-		var shoppingListArticle = shoppingArticles[i];
+		shoppingListArticle = shoppingArticles[i];
 		cell.appendChild(createShoppingListArticleDeleteButton(shoppingListArticle));
 	}
 }
