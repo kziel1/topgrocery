@@ -133,6 +133,7 @@ function createInventoryTableItem(inventoryArticle, articleTableBody) {
 	cell.appendChild(document.createTextNode(inventoryArticle.id));
 	cell = row.insertCell(1);
 	cell.appendChild(document.createTextNode(inventoryArticle.article.name));
+	
 	cell = row.insertCell(2);
 	var numberInput = document.createElement("input");
 	numberInput.setAttribute("type", "number");
@@ -144,6 +145,7 @@ function createInventoryTableItem(inventoryArticle, articleTableBody) {
 		doRequest("PUT", "inventory-articles", inventoryArticle, refreshTables);
 	};
 	cell.appendChild(numberInput);
+	
 	cell = row.insertCell(3);
 	var dateInput = document.createElement("input");
 	dateInput.setAttribute("type", "date");
@@ -155,6 +157,7 @@ function createInventoryTableItem(inventoryArticle, articleTableBody) {
 		doRequest("PUT", "inventory-articles", inventoryArticle, refreshTables);
 	};
 	cell.appendChild(dateInput);
+	
 	cell = row.insertCell(4);
 	cell.appendChild(createInventoryArticleDeleteButton(inventoryArticle));
 }
