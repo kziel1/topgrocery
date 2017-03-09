@@ -4,13 +4,40 @@ html {
 body {
 	margin: 0;
 	padding: 0 20px;
-	background: url("background_large.png") no-repeat;
+	background: url("background_large.png");
 	background-size: cover;
 	font-family: Arial Unicode MS, Arial, sans serif;
 }
 body > div {
 	max-width: 1000px;
 	margin: 100px auto 0;
+}
+#articles:target {
+	display: block;
+}
+#articles:target ~ #show {
+	display: none;
+}
+#articles {
+	display: none;
+}
+#inventory:target {
+	display: block;
+}
+#inventory:target ~ #show {
+	display: none;
+}
+#inventory {
+	display: none;
+}
+#shopping-list:target {
+	display: block;
+}
+#shopping-list:target ~ #show {
+	display: none;
+}
+#shopping-list {
+	display: none;
 }
 #navigation {
 	color: #0055aa;

@@ -2,6 +2,7 @@ function doGetRequest(url, callback) {
 	"use strict";
 	var request = new XMLHttpRequest();
 	request.open("GET", "http://localhost:8080/" + url, true);
+	// request.open("GET", "http://10.2.0.181:8080/" + url, true);
 	request.setRequestHeader('Cache-Control', 'no-cache');
 	request.setRequestHeader('Pragma', 'no-cache');
 	request.onreadystatechange = function () {
@@ -20,6 +21,7 @@ function doRequest(method, url, data, callback) {
 	"use strict";
 	var request = new XMLHttpRequest();
 	request.open(method, "http://localhost:8080/" + url, true);
+	// request.open(method, "http://10.2.0.181:8080/" + url, true);
 	request.setRequestHeader("Content-type", "application/json");
 	request.send(JSON.stringify(data));
 	request.onreadystatechange = function () {
