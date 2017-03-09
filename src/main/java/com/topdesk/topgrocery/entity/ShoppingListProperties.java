@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class ShoppingListProperties {
-	int participantsAmount;
-	int vegetariansAmount;
+	int participantCount;
+	int vegetarianCount;
 }

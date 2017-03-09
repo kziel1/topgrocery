@@ -27,15 +27,15 @@ public class TopGroceryShoppingListGenerator {
 	
 	public void generateShoppingList(ShoppingListProperties shoppingListProperties) {
 		shoppingListArticleRepository.deleteAll();
-		processShoppingListArticle("bread roll", BREAD_ROLLS_DEMAND, shoppingListProperties.getParticipantsAmount());
-		processShoppingListArticle("egg", EGGS_DEMAND, shoppingListProperties.getParticipantsAmount());
-		processShoppingListArticle("sth green", STH_GREEN_DEMAND, shoppingListProperties.getVegetariansAmount());
+		processShoppingListArticle("bread roll", BREAD_ROLLS_DEMAND, shoppingListProperties.getParticipantCount());
+		processShoppingListArticle("egg", EGGS_DEMAND, shoppingListProperties.getParticipantCount());
+		processShoppingListArticle("sth green", STH_GREEN_DEMAND, shoppingListProperties.getVegetarianCount());
 	}
 	
 	private void processShoppingListArticle(String articleName, int demand, int participantsAmount) {
 		Optional<InventoryArticle> inventoryArticle = inventoryArticleRepository.findAll().stream().filter(a -> a.getArticle().getName().equals(articleName)).findAny();
 		int inventoryAmount = inventoryArticle.isPresent() ? (int) inventoryArticle.get().getAmount() : 0;
-		int shoppingAmount = (demand * participantsAmount - inventoryAmount);
+		int shoppingAmount = demand * participantsAmount - inventoryAmount + ("bread roll".equals(articleName) ? 1 : 0);
 		if (shoppingAmount > 0) {
 			ShoppingListArticle shoppingListArticle = new ShoppingListArticle();
 			shoppingListArticle.setAmount(shoppingAmount);

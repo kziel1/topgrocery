@@ -1,6 +1,7 @@
 package com.topdesk.topgrocery;
 
 import java.util.Collection;
+import java.util.Optional;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,12 +37,12 @@ public class TopGroceryController {
 	
 	@RequestMapping(value = "/articles", method = {RequestMethod.POST, RequestMethod.PUT})
 	ResponseEntity<Void> saveArticle(@RequestBody Article article) {
-		if (StringUtils.isBlank(article.getName())) {
+		if (StringUtils.isBlank(article.getName()) || article.getName().length() > 50) {
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		boolean nameDuplicated = articleRepository.findAll()
-			.stream()
-			.anyMatch(a -> a.getName().equals(article.getName()));
+				.stream()
+				.anyMatch(a -> a.getName().equals(article.getName()));
 		if (!nameDuplicated) {
 			articleRepository.save(article);
 		}
@@ -79,9 +80,25 @@ public class TopGroceryController {
 	}
 	
 	@RequestMapping(value = "/shopping-list-articles", method = {RequestMethod.POST, RequestMethod.PUT})
-	HttpStatus addShoppingListArticle(@RequestBody ShoppingListArticle shoppingListArticle) {
-		shoppingListArticleRepository.save(shoppingListArticle);
-		return HttpStatus.OK;
+	ResponseEntity addShoppingListArticle(@RequestBody ShoppingListArticle shoppingListArticle) {
+		Article article = shoppingListArticle.getArticle();
+		if (!saveArticle(article).getStatusCode().equals(HttpStatus.OK)
+				|| shoppingListArticle.getAmount() < 1 || shoppingListArticle.getAmount() > 99) {
+			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		}
+		else {
+			Optional<ShoppingListArticle> repositoryShoppingListArticle = shoppingListArticleRepository.findAll().stream()
+					.filter(a -> a.getArticle().getName().equals(article.getName()))
+					.findAny();
+			if (repositoryShoppingListArticle.isPresent()) {
+				repositoryShoppingListArticle.get().setAmount(repositoryShoppingListArticle.get().getAmount() + shoppingListArticle.getAmount());
+				shoppingListArticleRepository.save(repositoryShoppingListArticle.get());
+			}
+			else {
+				shoppingListArticleRepository.save(shoppingListArticle);
+			}
+			return new ResponseEntity(HttpStatus.OK);
+		}
 	}
 	
 	@RequestMapping(value = "/shopping-list-articles", method = RequestMethod.DELETE)

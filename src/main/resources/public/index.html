@@ -28,7 +28,7 @@
 		<tr>
 			<th></th>
 			<th>
-				<input type="text" name="name" id="article-name" placeholder="zB. Kartoffelsalat">
+				<input type="text" name="name" id="article-name" maxlength="50" placeholder="zB. Kartoffelsalat">
 			</th>
 			<th>
 				<button onclick="addArticle()">add</button>
@@ -72,8 +72,8 @@
 				<span id="shopping-list-generator-parameters-label">
 					participants/vegetarians
 				</span>
-				<input type="number" id="shopping-list-participant-amount" min="1" max="99" placeholder="part.">
-				<input type="number" id="shopping-list-vegetarian-amount" min="1" max="99" placeholder="veg.">
+				<input type="number" id="shopping-list-participant-count" min="1" max="99" placeholder="part.">
+				<input type="number" id="shopping-list-vegetarian-count" min="1" max="99" placeholder="veg.">
 				<button onclick="generateShoppingList()">generate</button>
 			</span>
 		</caption>
