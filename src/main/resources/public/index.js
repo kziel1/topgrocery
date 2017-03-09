@@ -176,10 +176,12 @@ function reloadInventoryArticlesTable(inventoryArticles) {
 
 function generateShoppingList() {
 	"use strict";
-	var shoppingListProperties = {};
-	shoppingListProperties.participantCount = document.getElementById("shopping-list-participant-count").value;
-	shoppingListProperties.vegetarianCount = document.getElementById("shopping-list-vegetarian-count").value;
-	doRequest("PUT", "/shopping-list-generation", shoppingListProperties, refreshTables);
+	if (confirm("generation will overwrite the shopping list")) {
+		var shoppingListProperties = {};
+		shoppingListProperties.participantCount = document.getElementById("shopping-list-participant-count").value;
+		shoppingListProperties.vegetarianCount = document.getElementById("shopping-list-vegetarian-count").value;
+		doRequest("PUT", "/shopping-list-generation", shoppingListProperties, refreshTables);
+	}
 }
 
 function addShoppingListArticle() {
