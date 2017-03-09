@@ -110,14 +110,17 @@ td {
 #articles th:last-child, th:first-child {
 	width: 1%;
 }
-#inventory th:last-child, #inventory th:nth-last-child(2), #inventory th:nth-last-child(3), #inventory th:first-child {
+#inventory th:last-child, #inventory th:nth-last-child(3), #inventory th:first-child {
 	width: 1%;
+}
+#inventory th:nth-last-child(2){
+	width: 10em;
 }
 #inventory td:nth-last-child(3), #inventory thead tr:last-child th:nth-last-child(3) {
 	text-align: right;
 }
-#shopping-list th:last-child, #shopping-list th:nth-last-child(2) {
-	width: 1%
+#shopping-list th:last-child {
+	width: 1%;
 }
 #shopping-list td:nth-last-child(2), #shopping-list thead tr:last-child th:nth-last-child(2) {
 	text-align: right;
