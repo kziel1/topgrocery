@@ -62,9 +62,14 @@ public class TopGroceryController {
 	}
 	
 	@RequestMapping(value = "/inventory-articles", method = {RequestMethod.POST, RequestMethod.PUT})
-	HttpStatus saveInventoryArticle(@RequestBody InventoryArticle inventoryArticle) {
-		inventoryArticleRepository.save(inventoryArticle);
-		return HttpStatus.OK;
+	ResponseEntity<Void> saveInventoryArticle(@RequestBody InventoryArticle inventoryArticle) {
+		if (inventoryArticle.getAmount() < 1 || inventoryArticle.getAmount() > 99) {
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		}
+		else {
+			inventoryArticleRepository.save(inventoryArticle);
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
 	}
 	
 	@RequestMapping(value = "/inventory-articles", method = RequestMethod.DELETE)
@@ -80,11 +85,11 @@ public class TopGroceryController {
 	}
 	
 	@RequestMapping(value = "/shopping-list-articles", method = {RequestMethod.POST, RequestMethod.PUT})
-	ResponseEntity addShoppingListArticle(@RequestBody ShoppingListArticle shoppingListArticle) {
+	ResponseEntity<Void> addShoppingListArticle(@RequestBody ShoppingListArticle shoppingListArticle) {
 		Article article = shoppingListArticle.getArticle();
 		if (!saveArticle(article).getStatusCode().equals(HttpStatus.OK)
 				|| shoppingListArticle.getAmount() < 1 || shoppingListArticle.getAmount() > 99) {
-			return new ResponseEntity(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		}
 		else {
 			Optional<ShoppingListArticle> repositoryShoppingListArticle = shoppingListArticleRepository.findAll().stream()
@@ -97,7 +102,7 @@ public class TopGroceryController {
 			else {
 				shoppingListArticleRepository.save(shoppingListArticle);
 			}
-			return new ResponseEntity(HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.OK);
 		}
 	}
 	
