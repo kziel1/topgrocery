@@ -41,7 +41,11 @@ public class TopGroceryController {
 			httpStatus = HttpStatus.BAD_REQUEST;
 		}
 		else {
-			articleRepository.save(article);
+			boolean nameDuplicated = articleRepository.findAll().stream()
+					.anyMatch(a -> a.getName().equals(article.getName()));
+			if (!nameDuplicated) {
+				articleRepository.save(article);
+			}
 			httpStatus = HttpStatus.OK;
 		}
 		return new ResponseEntity(httpStatus);
