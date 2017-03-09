@@ -176,7 +176,7 @@ function reloadInventoryArticlesTable(inventoryArticles) {
 
 function generateShoppingList() {
 	"use strict";
-	if (confirm("generation will overwrite the shopping list")) {
+	if (confirm("generation will overwrite existing shopping list")) {
 		var shoppingListProperties = {};
 		shoppingListProperties.participantCount = document.getElementById("shopping-list-participant-count").value;
 		shoppingListProperties.vegetarianCount = document.getElementById("shopping-list-vegetarian-count").value;
