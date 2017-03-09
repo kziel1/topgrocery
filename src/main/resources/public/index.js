@@ -134,7 +134,6 @@ function createInventoryTableItem(inventoryArticle, articleTableBody) {
 	cell = row.insertCell(1);
 	cell.appendChild(document.createTextNode(inventoryArticle.article.name));
 	cell = row.insertCell(2);
-	
 	var numberInput = document.createElement("input");
 	numberInput.setAttribute("type", "number");
 	numberInput.setAttribute("min", "0");
@@ -146,7 +145,6 @@ function createInventoryTableItem(inventoryArticle, articleTableBody) {
 	};
 	cell.appendChild(numberInput);
 	cell = row.insertCell(3);
-	
 	var dateInput = document.createElement("input");
 	dateInput.setAttribute("type", "date");
 	if (inventoryArticle.useBy !== null) {
@@ -160,6 +158,7 @@ function createInventoryTableItem(inventoryArticle, articleTableBody) {
 	cell = row.insertCell(4);
 	cell.appendChild(createInventoryArticleDeleteButton(inventoryArticle));
 }
+
 function reloadInventoryArticlesTable(inventoryArticles) {
 	"use strict";
 	var i;
@@ -180,6 +179,7 @@ function generateShoppingList() {
 	shoppingListProperties.vegetariansAmount = document.getElementById("shopping-list-vegetarian-amount").value;
 	doRequest("PUT", "shopping-list-generation", shoppingListProperties, refreshTables);
 }
+
 function addShoppingListArticle() {
 	"use strict";
 	var shoppingListArticle = {};
@@ -188,16 +188,15 @@ function addShoppingListArticle() {
 	shoppingListArticle.amount = document.getElementById("shopping-list-article-amount").value;
 	doRequest("POST", "shopping-list-articles", shoppingListArticle, refreshTables);
 }
+
 function createShoppingListArticleDeleteButton(shoppingListArticle) {
 	"use strict";
-	var button = document.createElement("button");
-	var t = document.createTextNode("delete");
-	button.appendChild(t);
-	button.onclick = function () {
+	var onclick = function () {
 		doRequest("DELETE", "shopping-list-articles", shoppingListArticle, refreshTables);
 	};
-	return button;
+	return createDeleteButton(onclick);
 }
+
 function reloadShoppingListArticlesTable(shoppingArticles) {
 	"use strict";
 	var i, row, cell;
