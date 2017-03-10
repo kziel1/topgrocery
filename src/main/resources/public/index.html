@@ -57,17 +57,15 @@
 			<th>
 				<select id="inventory-article-select"></select>
 			</th>
-			<form>
-				<th>
-					<input type="number" id="inventory-article-amount" min="1" max="99" value="1"
-						   onmouseup="validateInventoryForm()" onkeyup="validateInventoryForm()">
-				</th>
-				<th><input type="date" id="inventory-article-use-by">
-				</th>
-				<th>
-					<button id="add-inventory-article" onclick="addInventoryArticle()">add</button>
-				</th>
-			</form>
+			<th>
+				<input type="number" id="inventory-article-amount" min="1" max="99" value="1"
+					   onmouseup="validateInventoryForm()" onkeyup="validateInventoryForm()">
+			</th>
+			<th><input type="date" id="inventory-article-use-by">
+			</th>
+			<th>
+				<button id="add-inventory-article" onclick="addInventoryArticle()">add</button>
+			</th>
 		</tr>
 		</thead>
 		<tbody></tbody>

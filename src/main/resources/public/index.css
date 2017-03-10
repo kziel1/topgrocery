@@ -186,7 +186,6 @@ button:disabled {
 	}
 	input[type=number] {
 		-moz-appearance: textfield;
-		appearance: textfield;
 		border: none;
 	}
 	tr {
