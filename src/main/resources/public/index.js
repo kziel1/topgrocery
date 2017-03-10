@@ -38,17 +38,23 @@ function populateArticlesSelects(articles) {
 	"use strict";
 	var inventoryArticleSelect = document.getElementById("inventory-article-select");
 	var shoppingListArticleSelect = document.getElementById("shopping-list-article-select");
-	var i;
 	inventoryArticleSelect.innerHTML = "";
 	shoppingListArticleSelect.innerHTML = "";
-	var option;
+	var datalist = document.createElement("datalist");
+	datalist.setAttribute("id","article-datalist")
+	var i, selectOption, datalistOption;
 	for (i = 0; i < articles.length; i++) {
-		option = document.createElement("option");
-		option.text = articles[i].name;
-		option.value = JSON.stringify(articles[i]);
-		inventoryArticleSelect.appendChild(option);
-		shoppingListArticleSelect.appendChild(option.cloneNode(true));
+		selectOption = document.createElement("option");
+		datalistOption = document.createElement("option");
+		selectOption.text = articles[i].name;
+		selectOption.value = JSON.stringify(articles[i]);
+		datalistOption.value = JSON.stringify(articles[i]);
+		inventoryArticleSelect.appendChild(selectOption);
+		datalist.appendChild(datalistOption);
 	}
+	// shoppingListArticleSelect.appendChild(option.cloneNode(true));
+	shoppingListArticleSelect.setAttribute("list","article-datalist");
+	shoppingListArticleSelect.appendChild(datalist);
 }
 function refreshTables() {
 	"use strict";
@@ -223,13 +229,40 @@ function reloadShoppingListArticlesTable(shoppingArticles) {
 }
 
 function isNumberValid(n) {
-	return !isNaN(parseFloat(n)) && isFinite(n) && n > 0 && n < 100;
+	"use strict";
+	return !isNaN(parseFloat(n)) && isFinite(n) && n >= 0 && n < 100;
 }
 
 function validateInventoryForm() {
-	var button = document.getElementById("add-inventory-article-button");
+	"use strict";
+	var button = document.getElementById("add-inventory-article");
 	var amount = document.getElementById("inventory-article-amount").value;
 	if (isNumberValid(amount)) {
+		button.disabled = false;
+	}
+	else {
+		button.disabled = true;
+	}
+}
+
+function validateShoppingListAddForm() {
+	"use strict";
+	var button = document.getElementById("add-shopping-list");
+	var amount = document.getElementById("shopping-list-article-amount").value;
+	if (isNumberValid(amount)) {
+		button.disabled = false;
+	}
+	else {
+		button.disabled = true;
+	}
+}
+
+function validateShoppingListGenerateForm() {
+	"use strict";
+	var button = document.getElementById("generate-shopping-list");
+	var participantCount = document.getElementById("shopping-list-participant-count").value;
+	var vegetarianCount = document.getElementById("shopping-list-vegetarian-count").value;
+	if (isNumberValid(participantCount) && isNumberValid(vegetarianCount)) {
 		button.disabled = false;
 	}
 	else {
@@ -240,4 +273,5 @@ function validateInventoryForm() {
 window.onload = function () {
 	"use strict";
 	refreshTables();
+	validateShoppingListGenerateForm()
 };

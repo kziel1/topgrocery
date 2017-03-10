@@ -56,11 +56,12 @@
 			</th>
 			<form>
 				<th>
-					<input type="number" id="inventory-article-amount" min="1" max="99" value="1" onmouseup="validateInventoryForm()" onkeyup="validateInventoryForm()">
+					<input type="number" id="inventory-article-amount" min="1" max="99" value="1"
+						   onmouseup="validateInventoryForm()" onkeyup="validateInventoryForm()">
 				</th>
 				<th><input type="date" id="inventory-article-use-by"></th>
 				<th>
-					<button id="add-inventory-article-button" onclick="addInventoryArticle()">add</button>
+					<button id="add-inventory-article" onclick="addInventoryArticle()">add</button>
 				</th>
 			</form>
 		</tr>
@@ -76,9 +77,11 @@
 				<span id="shopping-list-generator-parameters-label">
 					participants/vegetarians
 				</span>
-				<input type="number" id="shopping-list-participant-count" min="1" max="99" placeholder="part.">
-				<input type="number" id="shopping-list-vegetarian-count" min="1" max="99" placeholder="veg.">
-				<button onclick="generateShoppingList()">generate</button>
+				<input type="number" id="shopping-list-participant-count" min="1" max="99" placeholder="part."
+					   onmouseup="validateShoppingListGenerateForm()" onkeyup="validateShoppingListGenerateForm()">
+				<input type="number" id="shopping-list-vegetarian-count" min="0" max="99" placeholder="veg."
+					   onmouseup="validateShoppingListGenerateForm()" onkeyup="validateShoppingListGenerateForm()">
+				<button id="generate-shopping-list" onclick="generateShoppingList()">generate</button>
 			</span>
 		</caption>
 		<thead>
@@ -91,11 +94,12 @@
 		<tr>
 			<th></th>
 			<th>
-				<select id="shopping-list-article-select"></select>
+				<input id="shopping-list-article-select">
 			</th>
-			<th><input type="number" id="shopping-list-article-amount" min="1" max="99" value="1"></th>
+			<th><input type="number" id="shopping-list-article-amount" min="1" max="99" value="1"
+					   onmouseup="validateShoppingListAddForm()" onkeyup="validateShoppingListAddForm()"></th>
 			<th>
-				<button onclick="addShoppingListArticle()">add</button>
+				<button id="add-shopping-list" onclick="addShoppingListArticle()">add</button>
 			</th>
 		</tr>
 		</thead>
