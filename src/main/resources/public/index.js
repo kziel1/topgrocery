@@ -256,10 +256,12 @@ function isNumberValid(n) {
 function validateArticleForm(event) {
 	"use strict";
 	var button = document.getElementById("add-article");
-	var value = document.getElementById("article-name").value;
+	var articleNameTextInput = document.getElementById("article-name");
+	var value = articleNameTextInput.value;
 	button.disabled = !value || value === "";
 	if (event && event.type === "keyup" && event.keyCode === 13) {
 		addArticle();
+		articleNameTextInput.focus();
 	}
 }
 
