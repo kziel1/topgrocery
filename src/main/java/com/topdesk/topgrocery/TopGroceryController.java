@@ -100,6 +100,8 @@ public class TopGroceryController {
 				shoppingListArticleRepository.save(repositoryShoppingListArticle.get());
 			}
 			else {
+				Article repositoryArticle = articleRepository.findAll().stream().filter(a->a.getName().equals(article.getName())).findAny().get();
+				shoppingListArticle.setArticle(repositoryArticle);
 				shoppingListArticleRepository.save(shoppingListArticle);
 			}
 			return new ResponseEntity<>(HttpStatus.OK);

@@ -41,14 +41,14 @@ function populateArticlesSelects(articles) {
 	inventoryArticleSelect.innerHTML = "";
 	shoppingListArticleSelect.innerHTML = "";
 	var datalist = document.createElement("datalist");
-	datalist.setAttribute("id", "article-datalist")
+	datalist.setAttribute("id", "article-datalist");
 	var i, selectOption, datalistOption;
 	for (i = 0; i < articles.length; i++) {
 		selectOption = document.createElement("option");
 		datalistOption = document.createElement("option");
 		selectOption.text = articles[i].name;
 		selectOption.value = JSON.stringify(articles[i]);
-		datalistOption.value = JSON.stringify(articles[i]);
+		datalistOption.value = articles[i].name;
 		inventoryArticleSelect.appendChild(selectOption);
 		datalist.appendChild(datalistOption);
 	}
@@ -81,8 +81,7 @@ function addArticle() {
 function addInventoryArticle() {
 	"use strict";
 	var inventoryArticle = {};
-	var article = JSON.parse(document.getElementById("inventory-article-select").value);
-	inventoryArticle.article = article;
+	inventoryArticle.article = JSON.parse(document.getElementById("inventory-article-select").value);
 	inventoryArticle.amount = document.getElementById("inventory-article-amount").value;
 	inventoryArticle.useBy = document.getElementById("inventory-article-use-by").value;
 	doRequest("POST", "/inventory-articles", inventoryArticle, refreshTables);
@@ -200,8 +199,8 @@ function generateShoppingList() {
 
 function addShoppingListArticle() {
 	"use strict";
-	var shoppingListArticle = {};
-	var article = JSON.parse(document.getElementById("shopping-list-article-select").value);
+	var shoppingListArticle = {}, article = {};
+	article.name = document.getElementById("shopping-list-article-select").value;
 	shoppingListArticle.article = article;
 	shoppingListArticle.amount = document.getElementById("shopping-list-article-amount").value;
 	doRequest("POST", "/shopping-list-articles", shoppingListArticle, refreshTables);
@@ -274,8 +273,9 @@ function validateInventoryForm() {
 function validateShoppingListAddForm() {
 	"use strict";
 	var button = document.getElementById("add-shopping-list");
+	var value = document.getElementById("shopping-list-article-select").value;
 	var amount = document.getElementById("shopping-list-article-amount").value;
-	button.disabled = !isNumberValid(amount);
+	button.disabled = !isNumberValid(amount) && !value || value === "";
 }
 
 function validateShoppingListGenerateForm() {
@@ -290,5 +290,6 @@ window.onload = function () {
 	"use strict";
 	refreshTables();
 	validateShoppingListGenerateForm();
+	validateShoppingListAddForm();
 	validateArticleForm();
 };
