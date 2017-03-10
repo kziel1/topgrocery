@@ -56,11 +56,11 @@
 			</th>
 			<form>
 				<th>
-					<input type="number" id="inventory-article-amount" min="1" max="99" value="1">
+					<input type="number" id="inventory-article-amount" min="1" max="99" value="1" onmouseup="validateInventoryForm()" onkeyup="validateInventoryForm()">
 				</th>
 				<th><input type="date" id="inventory-article-use-by"></th>
 				<th>
-					<button onclick="addInventoryArticle()">add</button>
+					<button id="add-inventory-article-button" onclick="addInventoryArticle()">add</button>
 				</th>
 			</form>
 		</tr>

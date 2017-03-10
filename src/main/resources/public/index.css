@@ -156,6 +156,9 @@ button:focus, button:hover {
 button:active {
 	box-shadow: none;
 }
+button:disabled{
+	background-color: #666;
+}
 @media screen and (max-width: 640px) {
 	header {
 		font-size: 2em;

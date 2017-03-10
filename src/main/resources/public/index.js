@@ -222,6 +222,21 @@ function reloadShoppingListArticlesTable(shoppingArticles) {
 	}
 }
 
+function isNumberValid(n) {
+	return !isNaN(parseFloat(n)) && isFinite(n) && n > 0 && n < 100;
+}
+
+function validateInventoryForm() {
+	var button = document.getElementById("add-inventory-article-button");
+	var amount = document.getElementById("inventory-article-amount").value;
+	if (isNumberValid(amount)) {
+		button.disabled = false;
+	}
+	else {
+		button.disabled = true;
+	}
+}
+
 window.onload = function () {
 	"use strict";
 	refreshTables();
