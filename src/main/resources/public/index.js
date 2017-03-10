@@ -245,36 +245,21 @@ function validateArticleForm() {
 	"use strict";
 	var button = document.getElementById("add-article");
 	var value = document.getElementById("article-name").value;
-	if (value && value !== "") {
-		button.disabled = false;
-	}
-	else {
-		button.disabled = true;
-	}
+	button.disabled = !value || value === "";
 }
 
 function validateInventoryForm() {
 	"use strict";
 	var button = document.getElementById("add-inventory-article");
 	var amount = document.getElementById("inventory-article-amount").value;
-	if (isNumberValid(amount)) {
-		button.disabled = false;
-	}
-	else {
-		button.disabled = true;
-	}
+	button.disabled = !isNumberValid(amount);
 }
 
 function validateShoppingListAddForm() {
 	"use strict";
 	var button = document.getElementById("add-shopping-list");
 	var amount = document.getElementById("shopping-list-article-amount").value;
-	if (isNumberValid(amount)) {
-		button.disabled = false;
-	}
-	else {
-		button.disabled = true;
-	}
+	button.disabled = !isNumberValid(amount);
 }
 
 function validateShoppingListGenerateForm() {
@@ -282,12 +267,7 @@ function validateShoppingListGenerateForm() {
 	var button = document.getElementById("generate-shopping-list");
 	var participantCount = document.getElementById("shopping-list-participant-count").value;
 	var vegetarianCount = document.getElementById("shopping-list-vegetarian-count").value;
-	if (isNumberValid(participantCount) && isNumberValid(vegetarianCount)) {
-		button.disabled = false;
-	}
-	else {
-		button.disabled = true;
-	}
+	button.disabled = !isNumberValid(participantCount) || !isNumberValid(vegetarianCount);
 }
 
 window.onload = function () {
