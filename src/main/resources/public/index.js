@@ -65,9 +65,6 @@ function refreshTables() {
 
 function addArticle() {
 	"use strict";
-	if (event.type === "keydown" && event.keyCode !== 13) {
-		return;
-	}
 	var article = {};
 	article.name = document.getElementById("article-name").value;
 	doRequest("POST", "/articles", article, refreshTables);
@@ -256,34 +253,46 @@ function isNumberValid(n) {
 	return !isNaN(parseFloat(n)) && isFinite(n) && n >= 0 && n < 100;
 }
 
-function validateArticleForm() {
+function validateArticleForm(event) {
 	"use strict";
 	var button = document.getElementById("add-article");
 	var value = document.getElementById("article-name").value;
 	button.disabled = !value || value === "";
+	if (event && event.type === "keyup" && event.keyCode === 13) {
+		addArticle();
+	}
 }
 
-function validateInventoryForm() {
+function validateInventoryForm(event) {
 	"use strict";
 	var button = document.getElementById("add-inventory-article");
 	var amount = document.getElementById("inventory-article-amount").value;
 	button.disabled = !isNumberValid(amount);
+	if (event && event.type === "keyup" && event.keyCode === 13) {
+		addInventoryArticle();
+	}
 }
 
-function validateShoppingListAddForm() {
+function validateShoppingListAddForm(event) {
 	"use strict";
 	var button = document.getElementById("add-shopping-list");
 	var value = document.getElementById("shopping-list-article-select").value;
 	var amount = document.getElementById("shopping-list-article-amount").value;
 	button.disabled = !isNumberValid(amount) && !value || value === "";
+	if (event && event.type === "keyup" && event.keyCode === 13) {
+		addShoppingListArticle();
+	}
 }
 
-function validateShoppingListGenerateForm() {
+function validateShoppingListGenerateForm(event) {
 	"use strict";
 	var button = document.getElementById("generate-shopping-list");
 	var participantCount = document.getElementById("shopping-list-participant-count").value;
 	var vegetarianCount = document.getElementById("shopping-list-vegetarian-count").value;
 	button.disabled = !isNumberValid(participantCount) || !isNumberValid(vegetarianCount);
+	if (event && event.type === "keyup" && event.keyCode === 13) {
+		addShoppingListArticle();
+	}
 }
 
 window.onload = function () {
