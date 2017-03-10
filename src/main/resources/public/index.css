@@ -159,7 +159,7 @@ button:focus, button:hover {
 button:active {
 	box-shadow: none;
 }
-button:disabled{
+button:disabled {
 	background-color: #666;
 }
 @media screen and (max-width: 640px) {
@@ -175,5 +175,24 @@ button:disabled{
 	}
 	#shopping-list-generator-parameters-label {
 		display: none;
+	}
+}
+@media print {
+	#shopping-list {
+		display: block;
+	}
+	#navigation, button, caption, thead, td:first-child {
+		display: none;
+	}
+	input[type=number] {
+		-moz-appearance: textfield;
+		appearance: textfield;
+		border: none;
+	}
+	tr {
+		border: none;
+	}
+	table {
+		box-shadow: none;
 	}
 }
