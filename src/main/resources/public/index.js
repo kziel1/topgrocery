@@ -150,7 +150,7 @@ function createInventoryTableItem(inventoryArticle, articleTableBody) {
 	cell = row.insertCell(2);
 	var numberInput = document.createElement("input");
 	numberInput.setAttribute("type", "number");
-	numberInput.setAttribute("min", "0");
+	numberInput.setAttribute("min", "1");
 	numberInput.setAttribute("max", "99");
 	numberInput.value = inventoryArticle.amount;
 	numberInput.onchange = function () {
@@ -215,24 +215,40 @@ function createShoppingListArticleDeleteButton(shoppingListArticle) {
 	return createDeleteButton(onclick);
 }
 
+function createShoppingListTableItem(shoppingListArticle, articleTableBody) {
+	"use strict";
+	var row, cell;
+	row = articleTableBody.insertRow(articleTableBody.rows.length);
+	cell = row.insertCell(0);
+	cell.appendChild(document.createTextNode(shoppingListArticle.id));
+	cell = row.insertCell(1);
+	cell.appendChild(document.createTextNode(shoppingListArticle.article.name));
+	
+	cell = row.insertCell(2);
+	var numberInput = document.createElement("input");
+	numberInput.setAttribute("type", "number");
+	numberInput.setAttribute("min", "1");
+	numberInput.setAttribute("max", "99");
+	numberInput.value = shoppingListArticle.amount;
+	numberInput.onchange = function () {
+		shoppingListArticle.amount = numberInput.value;
+		doRequest("PUT", "/shopping-list-articles", shoppingListArticle, refreshTables);
+	};
+	cell.appendChild(numberInput);
+	
+	cell = row.insertCell(3);
+	cell.appendChild(createShoppingListArticleDeleteButton(shoppingListArticle));
+}
+
 function reloadShoppingListArticlesTable(shoppingArticles) {
 	"use strict";
 	var articleTableBody = document.getElementById("shopping-list").getElementsByTagName('tbody')[0];
 	while (articleTableBody.hasChildNodes()) {
 		articleTableBody.deleteRow(0);
 	}
-	var i, row, cell, shoppingListArticle;
+	var i;
 	for (i = 0; i < shoppingArticles.length; i++) {
-		row = articleTableBody.insertRow(articleTableBody.rows.length);
-		cell = row.insertCell(0);
-		cell.appendChild(document.createTextNode(shoppingArticles[i].id));
-		cell = row.insertCell(1);
-		cell.appendChild(document.createTextNode(shoppingArticles[i].article.name));
-		cell = row.insertCell(2);
-		cell.appendChild(document.createTextNode(shoppingArticles[i].amount));
-		cell = row.insertCell(3);
-		shoppingListArticle = shoppingArticles[i];
-		cell.appendChild(createShoppingListArticleDeleteButton(shoppingListArticle));
+		createShoppingListTableItem(shoppingArticles[i], articleTableBody);
 	}
 }
 

@@ -122,6 +122,9 @@ td {
 #shopping-list th:last-child {
 	width: 1%;
 }
+#shopping-list th:nth-last-child(2) {
+	width: 10em;
+}
 #shopping-list td:nth-last-child(2), #shopping-list thead tr:last-child th:nth-last-child(2) {
 	text-align: right;
 }

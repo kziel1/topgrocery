@@ -32,7 +32,9 @@
 					   onmouseup="validateArticleForm()" onkeyup="validateArticleForm()" onkeydown="addArticle()">
 			</th>
 			<th>
-				<button id="add-article" onclick="addArticle()">add</button>
+				<button id="add-article" onclick="addArticle()">
+					add
+				</button>
 			</th>
 		</tr>
 		</thead>
@@ -60,7 +62,8 @@
 					<input type="number" id="inventory-article-amount" min="1" max="99" value="1"
 						   onmouseup="validateInventoryForm()" onkeyup="validateInventoryForm()">
 				</th>
-				<th><input type="date" id="inventory-article-use-by"></th>
+				<th><input type="date" id="inventory-article-use-by">
+				</th>
 				<th>
 					<button id="add-inventory-article" onclick="addInventoryArticle()">add</button>
 				</th>
@@ -82,7 +85,9 @@
 					   onmouseup="validateShoppingListGenerateForm()" onkeyup="validateShoppingListGenerateForm()">
 				<input type="number" id="shopping-list-vegetarian-count" min="0" max="99" placeholder="veg."
 					   onmouseup="validateShoppingListGenerateForm()" onkeyup="validateShoppingListGenerateForm()">
-				<button id="generate-shopping-list" onclick="generateShoppingList()">generate</button>
+				<button id="generate-shopping-list" onclick="generateShoppingList()">
+					generate
+				</button>
 			</span>
 		</caption>
 		<thead>
@@ -98,9 +103,12 @@
 				<input id="shopping-list-article-select">
 			</th>
 			<th><input type="number" id="shopping-list-article-amount" min="1" max="99" value="1"
-					   onmouseup="validateShoppingListAddForm()" onkeyup="validateShoppingListAddForm()"></th>
+					   onmouseup="validateShoppingListAddForm()" onkeyup="validateShoppingListAddForm()">
+			</th>
 			<th>
-				<button id="add-shopping-list" onclick="addShoppingListArticle()">add</button>
+				<button id="add-shopping-list" onclick="addShoppingListArticle()">
+					add
+				</button>
 			</th>
 		</tr>
 		</thead>

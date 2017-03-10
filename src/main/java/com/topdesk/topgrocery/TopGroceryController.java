@@ -95,7 +95,7 @@ public class TopGroceryController {
 			Optional<ShoppingListArticle> repositoryShoppingListArticle = shoppingListArticleRepository.findAll().stream()
 					.filter(a -> a.getArticle().getName().equals(article.getName()))
 					.findAny();
-			if (repositoryShoppingListArticle.isPresent()) {
+			if (repositoryShoppingListArticle.isPresent() && shoppingListArticle.getId() == 0) {
 				repositoryShoppingListArticle.get().setAmount(repositoryShoppingListArticle.get().getAmount() + shoppingListArticle.getAmount());
 				shoppingListArticleRepository.save(repositoryShoppingListArticle.get());
 			}
