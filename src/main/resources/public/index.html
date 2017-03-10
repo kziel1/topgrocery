@@ -28,10 +28,11 @@
 		<tr>
 			<th></th>
 			<th>
-				<input type="text" name="name" id="article-name" maxlength="50" placeholder="zB. Kartoffelsalat">
+				<input type="text" name="name" id="article-name" maxlength="50" placeholder="zB. Kartoffelsalat"
+					   onmouseup="validateArticleForm()" onkeyup="validateArticleForm()" onkeydown="addArticle()">
 			</th>
 			<th>
-				<button onclick="addArticle()">add</button>
+				<button id="add-article" onclick="addArticle()">add</button>
 			</th>
 		</tr>
 		</thead>

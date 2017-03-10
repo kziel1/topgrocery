@@ -41,7 +41,7 @@ function populateArticlesSelects(articles) {
 	inventoryArticleSelect.innerHTML = "";
 	shoppingListArticleSelect.innerHTML = "";
 	var datalist = document.createElement("datalist");
-	datalist.setAttribute("id","article-datalist")
+	datalist.setAttribute("id", "article-datalist")
 	var i, selectOption, datalistOption;
 	for (i = 0; i < articles.length; i++) {
 		selectOption = document.createElement("option");
@@ -52,10 +52,10 @@ function populateArticlesSelects(articles) {
 		inventoryArticleSelect.appendChild(selectOption);
 		datalist.appendChild(datalistOption);
 	}
-	// shoppingListArticleSelect.appendChild(option.cloneNode(true));
-	shoppingListArticleSelect.setAttribute("list","article-datalist");
+	shoppingListArticleSelect.setAttribute("list", "article-datalist");
 	shoppingListArticleSelect.appendChild(datalist);
 }
+
 function refreshTables() {
 	"use strict";
 	doGetRequest("/articles", reloadArticlesTable);
@@ -65,9 +65,17 @@ function refreshTables() {
 
 function addArticle() {
 	"use strict";
+	if (event.type === "keydown" && event.keyCode !== 13) {
+		return;
+	}
 	var article = {};
 	article.name = document.getElementById("article-name").value;
 	doRequest("POST", "/articles", article, refreshTables);
+	var addButton = document.getElementById("add-article");
+	addButton.blur();
+	var articleNameTextInput = document.getElementById("article-name");
+	articleNameTextInput.value = "";
+	articleNameTextInput.blur();
 }
 
 function addInventoryArticle() {
@@ -233,6 +241,18 @@ function isNumberValid(n) {
 	return !isNaN(parseFloat(n)) && isFinite(n) && n >= 0 && n < 100;
 }
 
+function validateArticleForm() {
+	"use strict";
+	var button = document.getElementById("add-article");
+	var value = document.getElementById("article-name").value;
+	if (value && value !== "") {
+		button.disabled = false;
+	}
+	else {
+		button.disabled = true;
+	}
+}
+
 function validateInventoryForm() {
 	"use strict";
 	var button = document.getElementById("add-inventory-article");
@@ -273,5 +293,6 @@ function validateShoppingListGenerateForm() {
 window.onload = function () {
 	"use strict";
 	refreshTables();
-	validateShoppingListGenerateForm()
+	validateShoppingListGenerateForm();
+	validateArticleForm();
 };
