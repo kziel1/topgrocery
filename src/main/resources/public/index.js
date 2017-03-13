@@ -320,6 +320,11 @@ window.onload = function () {
 	registerFormListeners(document.querySelectorAll(".shopping-list-generate-form"), validateShoppingListGenerateForm);
 	registerFormListeners(document.querySelectorAll(".shopping-list-add-form"), validateShoppingListAddForm);
 	
+	var navigationLinks = document.querySelectorAll(".navigation-link");
+	for (var i = 0; i < navigationLinks.length; i++) {
+		navigationLinks[i].addEventListener("click", refreshTables);
+	}
+	
 	document.querySelectorAll("#add-article")[0].addEventListener("click", addArticle);
 	document.querySelectorAll("#add-inventory-article")[0].addEventListener("click", addInventoryArticle);
 	document.querySelectorAll("#generate-shopping-list")[0].addEventListener("click", generateShoppingList);
