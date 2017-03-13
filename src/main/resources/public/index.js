@@ -72,7 +72,7 @@ function addArticle() {
 	addButton.blur();
 	var articleNameTextInput = document.getElementById("article-name");
 	articleNameTextInput.value = "";
-	articleNameTextInput.blur();
+	articleNameTextInput.focus();
 }
 
 function addInventoryArticle() {
@@ -256,12 +256,9 @@ function isNumberValid(n) {
 function validateArticleForm(event) {
 	"use strict";
 	var button = document.getElementById("add-article");
-	var articleNameTextInput = document.getElementById("article-name");
-	var value = articleNameTextInput.value;
-	button.disabled = !value || value === "";
+	button.disabled = !document.getElementById("article-name").value;
 	if (event && event.type === "keyup" && event.keyCode === 13) {
 		addArticle();
-		articleNameTextInput.focus();
 	}
 }
 
