@@ -253,11 +253,15 @@ function isNumberValid(n) {
 	return !isNaN(parseFloat(n)) && isFinite(n) && n >= 0 && n < 100;
 }
 
+function isEnterUp(event) {
+	return event && event.type === "keyup" && event.keyCode === 13;
+}
+
 function validateArticleForm(event) {
 	"use strict";
 	var button = document.getElementById("add-article");
 	button.disabled = !document.getElementById("article-name").value;
-	if (event && event.type === "keyup" && event.keyCode === 13) {
+	if (isEnterUp(event)) {
 		addArticle();
 	}
 }
@@ -267,7 +271,7 @@ function validateInventoryForm(event) {
 	var button = document.getElementById("add-inventory-article");
 	var amount = document.getElementById("inventory-article-amount").value;
 	button.disabled = !isNumberValid(amount);
-	if (event && event.type === "keyup" && event.keyCode === 13) {
+	if (isEnterUp(event)) {
 		addInventoryArticle();
 	}
 }
@@ -277,8 +281,8 @@ function validateShoppingListAddForm(event) {
 	var button = document.getElementById("add-shopping-list");
 	var value = document.getElementById("shopping-list-article-select").value;
 	var amount = document.getElementById("shopping-list-article-amount").value;
-	button.disabled = !isNumberValid(amount) && !value || value === "";
-	if (event && event.type === "keyup" && event.keyCode === 13) {
+	button.disabled = !isNumberValid(amount) && !value;
+	if (isEnterUp(event)) {
 		addShoppingListArticle();
 	}
 }
@@ -289,15 +293,35 @@ function validateShoppingListGenerateForm(event) {
 	var participantCount = document.getElementById("shopping-list-participant-count").value;
 	var vegetarianCount = document.getElementById("shopping-list-vegetarian-count").value;
 	button.disabled = !isNumberValid(participantCount) || !isNumberValid(vegetarianCount);
-	if (event && event.type === "keyup" && event.keyCode === 13) {
+	if (isEnterUp(event)) {
 		addShoppingListArticle();
+	}
+}
+
+function registerFormListeners(elements, callback) {
+	"use strict";
+	for (var i = 0; i < elements.length; i++) {
+		elements[i].addEventListener("mouseup", callback);
+		elements[i].addEventListener("keyup", callback);
+		elements[i].addEventListener("change", callback);
 	}
 }
 
 window.onload = function () {
 	"use strict";
 	refreshTables();
+	
 	validateShoppingListGenerateForm();
 	validateShoppingListAddForm();
 	validateArticleForm();
+	
+	registerFormListeners(document.querySelectorAll(".article-form"), validateArticleForm);
+	registerFormListeners(document.querySelectorAll(".inventory-form"), validateInventoryForm);
+	registerFormListeners(document.querySelectorAll(".shopping-list-generate-form"), validateShoppingListGenerateForm);
+	registerFormListeners(document.querySelectorAll(".shopping-list-add-form"), validateShoppingListAddForm);
+	
+	document.querySelectorAll("#add-article")[0].addEventListener("click", addArticle);
+	document.querySelectorAll("#add-inventory-article")[0].addEventListener("click", addInventoryArticle);
+	document.querySelectorAll("#generate-shopping-list")[0].addEventListener("click", generateShoppingList);
+	document.querySelectorAll("#add-shopping-list")[0].addEventListener("click", addShoppingListArticle);
 };

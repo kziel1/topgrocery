@@ -28,11 +28,11 @@
 		<tr>
 			<th></th>
 			<th>
-				<input type="text" name="name" id="article-name" maxlength="50" placeholder="zB. Kartoffelsalat"
-					   onmouseup="validateArticleForm(event)" onkeyup="validateArticleForm(event)">
+				<input class="article-form" type="text" name="name" id="article-name" maxlength="50"
+					   placeholder="zB. Kartoffelsalat">
 			</th>
 			<th>
-				<button id="add-article" onclick="addArticle()">
+				<button id="add-article">
 					add
 				</button>
 			</th>
@@ -40,6 +40,7 @@
 		</thead>
 		<tbody></tbody>
 	</table>
+</div>
 </div>
 <div id="inventory">
 	<table>
@@ -55,18 +56,18 @@
 		<tr>
 			<th></th>
 			<th>
-				<select id="inventory-article-select" onmouseup="validateInventoryForm(event)"
-						onkeyup="validateInventoryForm(event)"></select>
+				<select class="inventory-form" id="inventory-article-select"></select>
 			</th>
 			<th>
-				<input type="number" id="inventory-article-amount" min="1" max="99" value="1"
-					   onmouseup="validateInventoryForm(event)" onkeyup="validateInventoryForm(event)">
-			</th>
-			<th><input type="date" id="inventory-article-use-by" onmouseup="validateInventoryForm(event)"
-					   onkeyup="validateInventoryForm(event)">
+				<input class="inventory-form" type="number" id="inventory-article-amount" min="1" max="99" value="1">
 			</th>
 			<th>
-				<button id="add-inventory-article" onclick="addInventoryArticle()">add</button>
+				<input class="inventory-form" type="date" id="inventory-article-use-by">
+			</th>
+			<th>
+				<button id="add-inventory-article">
+					add
+				</button>
 			</th>
 		</tr>
 		</thead>
@@ -81,13 +82,11 @@
 				<span id="shopping-list-generator-parameters-label">
 					participants/vegetarians
 				</span>
-				<input type="number" id="shopping-list-participant-count" min="1" max="99" placeholder="part."
-					   onmouseup="validateShoppingListGenerateForm(event)"
-					   onkeyup="validateShoppingListGenerateForm(event)">
-				<input type="number" id="shopping-list-vegetarian-count" min="0" max="99" placeholder="veg."
-					   onmouseup="validateShoppingListGenerateForm(event)"
-					   onkeyup="validateShoppingListGenerateForm(event)">
-				<button id="generate-shopping-list" onclick="generateShoppingList()">
+				<input class="shopping-list-generate-form" type="number" id="shopping-list-participant-count" min="1"
+					   max="99" placeholder="part.">
+				<input class="shopping-list-generate-form" type="number" id="shopping-list-vegetarian-count" min="0"
+					   max="99" placeholder="veg.">
+				<button id="generate-shopping-list">
 					generate
 				</button>
 			</span>
@@ -102,14 +101,14 @@
 		<tr>
 			<th></th>
 			<th>
-				<input id="shopping-list-article-select" onchange="validateShoppingListAddForm(event)"
-					   onmouseup="validateShoppingListAddForm(event)" onkeyup="validateShoppingListAddForm(event)">
-			</th>
-			<th><input type="number" id="shopping-list-article-amount" min="1" max="99" value="1"
-					   onmouseup="validateShoppingListAddForm(event)" onkeyup="validateShoppingListAddForm(event)">
+				<input class="shopping-list-add-form" id="shopping-list-article-select">
 			</th>
 			<th>
-				<button id="add-shopping-list" onclick="addShoppingListArticle()">
+				<input class="shopping-list-add-form" type="number" id="shopping-list-article-amount" min="1" max="99"
+					   value="1">
+			</th>
+			<th>
+				<button id="add-shopping-list">
 					add
 				</button>
 			</th>
