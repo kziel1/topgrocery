@@ -66,7 +66,7 @@ function refreshTables() {
 function addArticle() {
 	"use strict";
 	var article = {};
-	article.name = document.getElementById("article-name").value;
+	article.name = document.getElementById("article-name").value.trim();
 	doRequest("POST", "/articles", article, refreshTables);
 	var addButton = document.getElementById("add-article");
 	addButton.blur();
@@ -203,7 +203,7 @@ function generateShoppingList() {
 function addShoppingListArticle() {
 	"use strict";
 	var shoppingListArticle = {}, article = {};
-	article.name = document.getElementById("shopping-list-article-select").value;
+	article.name = document.getElementById("shopping-list-article-select").value.trim();
 	shoppingListArticle.article = article;
 	shoppingListArticle.amount = document.getElementById("shopping-list-article-amount").value;
 	doRequest("POST", "/shopping-list-articles", shoppingListArticle, refreshTables);
