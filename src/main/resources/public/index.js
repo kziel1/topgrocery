@@ -80,7 +80,7 @@ function addInventoryArticle() {
 	var inventoryArticle = {};
 	inventoryArticle.article = JSON.parse(document.getElementById("inventory-article-select").value);
 	inventoryArticle.amount = document.getElementById("inventory-article-amount").value;
-	inventoryArticle.useBy = document.getElementById("inventory-article-use-by").value;
+	inventoryArticle.useBy = new Date(document.getElementById("inventory-article-use-by").value);
 	doRequest("POST", "/inventory-articles", inventoryArticle, refreshTables);
 }
 
@@ -159,10 +159,16 @@ function createInventoryTableItem(inventoryArticle, articleTableBody) {
 	var dateInput = document.createElement("input");
 	dateInput.setAttribute("type", "date");
 	if (inventoryArticle.useBy !== null) {
-		dateInput.valueAsDate = new Date(inventoryArticle.useBy);
+		var date = new Date(inventoryArticle.useBy);
+		dateInput.valueAsDate = date;
+		dateInput.setAttribute("value", date.toLocaleDateString('en-US', {
+			year: 'numeric',
+			month: '2-digit',
+			day: '2-digit'
+		}));
 	}
 	dateInput.onchange = function () {
-		inventoryArticle.useBy = dateInput.valueAsDate;
+		inventoryArticle.useBy = new Date(dateInput.value);
 		doRequest("PUT", "/inventory-articles", inventoryArticle, refreshTables);
 	};
 	cell.appendChild(dateInput);
@@ -270,7 +276,9 @@ function validateInventoryForm(event) {
 	"use strict";
 	var button = document.getElementById("add-inventory-article");
 	var amount = document.getElementById("inventory-article-amount").value;
-	button.disabled = !isNumberValid(amount);
+	var useBy = document.getElementById("inventory-article-use-by").value;
+	var dateRegexp = "^(((0[13578]|(10|12))/(0[1-9]|[1-2][0-9]|3[0-1]))|(02/(0[1-9]|[1-2][0-9]))|((0[469]|11)/(0[1-9]|[1-2][0-9]|30)))/[0-9]{4}$";
+	button.disabled = !isNumberValid(amount) || (!useBy.match(dateRegexp) && !document.getElementById("inventory-article-use-by").valueAsDate);
 	if (isEnterUp(event)) {
 		addInventoryArticle();
 	}
@@ -311,6 +319,7 @@ window.onload = function () {
 	"use strict";
 	refreshTables();
 	
+	validateInventoryForm();
 	validateShoppingListGenerateForm();
 	validateShoppingListAddForm();
 	validateArticleForm();
