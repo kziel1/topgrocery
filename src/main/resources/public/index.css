@@ -166,7 +166,7 @@ button:disabled {
 	header {
 		font-size: 2em;
 	}
-	table {
+	body > div {
 		margin-top: 0;
 	}
 	header img {

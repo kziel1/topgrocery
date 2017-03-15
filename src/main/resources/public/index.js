@@ -289,7 +289,7 @@ function validateShoppingListAddForm(event) {
 	var button = document.getElementById("add-shopping-list");
 	var value = document.getElementById("shopping-list-article-select").value;
 	var amount = document.getElementById("shopping-list-article-amount").value;
-	button.disabled = !isNumberValid(amount) && !value;
+	button.disabled = !isNumberValid(amount) || !value;
 	if (isEnterUp(event)) {
 		addShoppingListArticle();
 	}
@@ -319,10 +319,10 @@ window.onload = function () {
 	"use strict";
 	refreshTables();
 	
+	validateArticleForm();
 	validateInventoryForm();
 	validateShoppingListGenerateForm();
 	validateShoppingListAddForm();
-	validateArticleForm();
 	
 	registerFormListeners(document.querySelectorAll(".article-form"), validateArticleForm);
 	registerFormListeners(document.querySelectorAll(".inventory-form"), validateInventoryForm);
