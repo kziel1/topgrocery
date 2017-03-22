@@ -11,3 +11,6 @@ handlers:
 
 manual_scaling:
   instances: 1
+
+env_variables:
+  BUCKET_NAME: topgrocery862.appspot.com

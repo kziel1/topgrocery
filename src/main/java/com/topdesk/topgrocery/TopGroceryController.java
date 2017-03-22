@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.topdesk.topgrocery.cloudstorage.CloudShitStorage;
 import com.topdesk.topgrocery.entity.Article;
 import com.topdesk.topgrocery.entity.InventoryArticle;
 import com.topdesk.topgrocery.entity.ShoppingListArticle;
@@ -46,12 +47,14 @@ public class TopGroceryController {
 		if (!nameDuplicated) {
 			articleRepository.save(article);
 		}
+		CloudShitStorage.syncDatabase();
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/articles", method = RequestMethod.DELETE)
 	HttpStatus deleteArticle(@RequestBody Article article) {
 		articleRepository.delete(article.getId());
+		CloudShitStorage.syncDatabase();
 		return HttpStatus.OK;
 	}
 	
@@ -68,6 +71,7 @@ public class TopGroceryController {
 		}
 		else {
 			inventoryArticleRepository.save(inventoryArticle);
+			CloudShitStorage.syncDatabase();
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 	}
@@ -75,6 +79,7 @@ public class TopGroceryController {
 	@RequestMapping(value = "/inventory-articles", method = RequestMethod.DELETE)
 	HttpStatus deleteInventoryArticle(@RequestBody InventoryArticle inventoryArticle) {
 		inventoryArticleRepository.delete(inventoryArticle);
+		CloudShitStorage.syncDatabase();
 		return HttpStatus.OK;
 	}
 	
@@ -100,10 +105,11 @@ public class TopGroceryController {
 				shoppingListArticleRepository.save(repositoryShoppingListArticle.get());
 			}
 			else {
-				Article repositoryArticle = articleRepository.findAll().stream().filter(a->a.getName().equals(article.getName())).findAny().get();
+				Article repositoryArticle = articleRepository.findAll().stream().filter(a -> a.getName().equals(article.getName())).findAny().get();
 				shoppingListArticle.setArticle(repositoryArticle);
 				shoppingListArticleRepository.save(shoppingListArticle);
 			}
+			CloudShitStorage.syncDatabase();
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 	}
@@ -111,12 +117,14 @@ public class TopGroceryController {
 	@RequestMapping(value = "/shopping-list-articles", method = RequestMethod.DELETE)
 	HttpStatus deleteShoppingListArticle(@RequestBody ShoppingListArticle shoppingListArticle) {
 		shoppingListArticleRepository.delete(shoppingListArticle);
+		CloudShitStorage.syncDatabase();
 		return HttpStatus.OK;
 	}
 	
 	@RequestMapping(value = "/shopping-list-generation", method = RequestMethod.PUT)
 	HttpStatus generateShoppingList(@RequestBody ShoppingListProperties shoppingListProperties) {
 		topGroceryShoppingListGenerator.generateShoppingList(shoppingListProperties);
+		CloudShitStorage.syncDatabase();
 		return HttpStatus.OK;
 	}
 }
