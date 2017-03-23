@@ -315,10 +315,6 @@ function registerFormListeners(elements, callback) {
 	}
 }
 
-function test() {
-	doGetRequest("/test");
-}
-
 window.onload = function () {
 	"use strict";
 	refreshTables();

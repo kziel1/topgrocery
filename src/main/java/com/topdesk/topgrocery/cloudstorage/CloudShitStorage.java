@@ -29,6 +29,7 @@ public class CloudShitStorage {
 			byte[] data = Files.readAllBytes(target);
 			if (blob == null) {
 				BlobInfo blobInfo = BlobInfo.newBuilder(blobId).build();
+				//todo prevent from crashing
 				storage.create(blobInfo, data);
 			}
 			else {
